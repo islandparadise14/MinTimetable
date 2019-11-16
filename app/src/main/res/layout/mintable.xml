@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#dddddd">
+
+
+    <LinearLayout
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginRight="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="#eeeeee" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="vertical">
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#eeeeee"
+                android:gravity="right"
+                android:textColor="#000000"
+                android:layout_marginRight="1dp"
+                android:text="9" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#eeeeee"
+                android:gravity="right"
+                android:textColor="#000000"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="1dp"
+                android:text="9" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:background="#eeeeee"
+                android:gravity="right"
+                android:textColor="#000000"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="1dp"
+                android:text="9" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:paddingRight="1dp">
+
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#eeeeee"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:text="월" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="#eeeeee"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="화" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="#eeeeee"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="수" />
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="#eeeeee"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:text="목" />
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="1"
+                android:background="#eeeeee"
+                android:gravity="center"
+                android:text="금"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:layout_height="60dp"
+                        android:background="@color/white"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginBottom="1dp"/>
+
+                    <View
+                        android:layout_height="60dp"
+                        android:background="@color/white"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginBottom="1dp"/>
+
+                    <View
+                        android:layout_height="60dp"
+                        android:background="@color/white"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginBottom="1dp"/>
+
+                    <View
+                        android:layout_height="60dp"
+                        android:background="@color/white"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginBottom="1dp"/>
+
+                    <View
+                        android:layout_height="60dp"
+                        android:background="@color/white"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginBottom="1dp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <View
+                        android:layout_height="60dp"
+                        android:background="@color/white"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginBottom="1dp"/>
+
+                    <View
+                        android:layout_height="60dp"
+                        android:background="@color/white"
+                        android:layout_marginRight="1dp"
+                        android:layout_marginBottom="1dp"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"/>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"/>
+            </TableLayout>
+
+            <View
+                android:layout_width="75dp"
+                android:layout_height="80dp"
+                android:background="#00b3d7"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="30dp"/>
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
