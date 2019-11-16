@@ -1,10 +1,10 @@
-package com.example.mintable
+package com.islandparadise14.mintable
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 
-class YxisView : LinearLayout{
+class XxisView : LinearLayout{
     constructor(context: Context) : super(context) {}
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}

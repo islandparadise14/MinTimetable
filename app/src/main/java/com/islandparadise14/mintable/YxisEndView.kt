@@ -1,12 +1,10 @@
-package com.example.mintable
+package com.islandparadise14.mintable
 
 import android.content.Context
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.AttributeSet
 import android.widget.LinearLayout
 
-class TableCellView : LinearLayout {
+class YxisEndView : LinearLayout {
     constructor(context: Context) : super(context) {}
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
@@ -17,6 +15,4 @@ class TableCellView : LinearLayout {
         defStyleAttr
     ) {
     }
-
-
 }

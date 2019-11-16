@@ -1,4 +1,4 @@
-package com.example.mintable
+package com.islandparadise14.mintable
 
 import android.content.Context
 import android.util.AttributeSet

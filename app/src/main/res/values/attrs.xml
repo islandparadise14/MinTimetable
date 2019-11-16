@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="MinTimeTableView">
-        <attr name="setTopMenuHeight" format="integer"/>
-        <attr name="setLeftMenuWidth" format="integer"/>
-        <attr name="setCellHeight" format="integer"/>
-    </declare-styleable>
+
 </resources>
