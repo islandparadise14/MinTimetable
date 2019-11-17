@@ -2,18 +2,17 @@ package com.islandparadise14.mintable
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Point
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.WindowManager
+import android.view.View
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.mintable.view.*
 
 class MinTimeTableView : LinearLayout {
     var data: ArrayList<ScheduleEntity>? = null
-    var topMenuHeight: Int = 300
-    var leftMenuWidth: Int = 300
-    var cellHeight: Int = 600
+    var topMenuHeight: Int = 100
+    var leftMenuWidth: Int = 90
+    var cellHeight: Int = 200
 
     constructor(context: Context) : super(context){
         initView(context, null)
@@ -37,32 +36,47 @@ class MinTimeTableView : LinearLayout {
         val inflater = LayoutInflater.from(context)
         var v = inflater.inflate(R.layout.mintable, this, false)
         addView(v)
+    }
 
-        leftMenu.layoutParams = LayoutParams(leftMenuWidth, LayoutParams.MATCH_PARENT)
+    fun update(context: Context) {
+        leftMenu.layoutParams = LayoutParams(leftMenuWidth, LayoutParams.WRAP_CONTENT)
         topMenu.layoutParams =  LayoutParams(LayoutParams.MATCH_PARENT, topMenuHeight)
-        zeroPoint.layoutParams = LayoutParams(leftMenuWidth, LayoutParams.MATCH_PARENT)
 
-        zeroPoint.removeAllViews()
-        zeroPoint.addView(ZeroPointView(context))
+        removeViews()
 
-        topMenu.removeAllViews()
+        zeroPoint.addView(ZeroPointView(context, topMenuHeight, leftMenuWidth))
+
+
         var list = ArrayList<String>()
         list.add("월")
         list.add("화")
         list.add("수")
         list.add("목")
+        list.add("금")
+
+        var averageWidth = (timetable.width - leftMenuWidth)/list.size
+
         for(i in 0..3) {
-            topMenu.addView(XxisView(context, topMenuHeight, list[i]))
+            topMenu.addView(XxisView(context, topMenuHeight, averageWidth, list[i]))
         }
-        topMenu.addView(XxisEndView(context, topMenuHeight))
+        topMenu.addView(XxisEndView(context, topMenuHeight, averageWidth, list[4]))
+
+        for(i in 0..7) {
+            timeCell.addView(YxisView(context, cellHeight, leftMenuWidth, (9 + i).toString()))
+        }
+        timeCell.addView(YxisEndView(context, cellHeight, leftMenuWidth, "17"))
+
+        for(i in 0..8) {
+            for(j in 0..4) {
+                mainTable.addView(TableCellView(context, cellHeight, averageWidth, (j * averageWidth), (i * cellHeight)))
+            }
+        }
     }
 
-    fun later() {
-        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val display = wm.defaultDisplay
-        val size = Point()
-        display.getSize(size)
-        val width = size.x.toFloat()
-        val height = size.y.toFloat()
+    fun removeViews(){
+        zeroPoint.removeAllViews()
+        topMenu.removeAllViews()
+        timeCell.removeAllViews()
+        mainTable.removeAllViews()
     }
 }

@@ -1,18 +1,24 @@
 package com.islandparadise14.mintable
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.y_xis.view.*
+import kotlinx.android.synthetic.main.y_xis_end.view.*
 
-class YxisEndView : LinearLayout {
-    constructor(context: Context) : super(context) {}
+@SuppressLint("ViewConstructor")
+class YxisEndView(context: Context, height: Int, width: Int, text: String) : LinearLayout(context) {
+    init {
+        initView(context, height, width, text, null)
+    }
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {}
+    fun initView(context: Context, height: Int, width: Int, text: String, attrs: AttributeSet?){
+        val inflater = LayoutInflater.from(context)
+        inflater.inflate(R.layout.y_xis_end, this, true)
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
+        leftMenuEndItem.layoutParams = LayoutParams(width, height)
+        yXisEnd.text = text
     }
 }

@@ -4,26 +4,17 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.zero_point.view.*
 
-class ZeroPointView : LinearLayout {
-    constructor(context: Context) : super(context) {
-        init(context)
+class ZeroPointView(context: Context, height: Int, width: Int) : LinearLayout(context) {
+    init {
+        initView(context, height, width)
     }
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-        init(context)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
-        init(context)
-    }
-
-    private fun init(context: Context) {
+    private fun initView(context: Context, height: Int, width: Int) {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.zero_point, this, true)
+
+        zeroLayout.layoutParams = LayoutParams(width, height)
     }
 }

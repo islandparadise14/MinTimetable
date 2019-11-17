@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#dddddd"
+    android:id="@+id/timetable"
     android:orientation="horizontal">
 
 
@@ -18,12 +19,13 @@
         <LinearLayout
             android:id="@+id/zeroPoint"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/timeCell"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -46,6 +48,7 @@
         </LinearLayout>
 
         <FrameLayout
+            android:id="@+id/mainTable"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
