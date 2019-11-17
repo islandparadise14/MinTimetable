@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#dddddd"
     android:id="@+id/timetable"
     android:orientation="horizontal">
 
@@ -13,6 +12,7 @@
         android:id="@+id/leftMenu"
         android:layout_width="30dp"
         android:layout_height="match_parent"
+        android:background="#dddddd"
         android:orientation="vertical">
 
 
@@ -41,7 +41,8 @@
 
         <LinearLayout
             android:id="@+id/topMenu"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:background="#dddddd"
             android:layout_height="30dp"
             android:orientation="horizontal">
 
@@ -49,7 +50,8 @@
 
         <FrameLayout
             android:id="@+id/mainTable"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:background="#dddddd"
             android:layout_height="match_parent">
 
         </FrameLayout>

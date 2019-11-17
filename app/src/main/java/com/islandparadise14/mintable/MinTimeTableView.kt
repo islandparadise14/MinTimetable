@@ -3,16 +3,20 @@ package com.islandparadise14.mintable
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.util.DisplayMetrics
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.mintable.view.*
+import kotlin.math.roundToInt
 
 class MinTimeTableView : LinearLayout {
     var data: ArrayList<ScheduleEntity>? = null
-    var topMenuHeight: Int = 100
-    var leftMenuWidth: Int = 90
-    var cellHeight: Int = 200
+    var topMenuHeight: Int = 20
+    var leftMenuWidth: Int = 30
+    var cellHeight: Int = 50
 
     constructor(context: Context) : super(context){
         initView(context, null)
@@ -39,12 +43,23 @@ class MinTimeTableView : LinearLayout {
     }
 
     fun update(context: Context) {
-        leftMenu.layoutParams = LayoutParams(leftMenuWidth, LayoutParams.WRAP_CONTENT)
-        topMenu.layoutParams =  LayoutParams(LayoutParams.MATCH_PARENT, topMenuHeight)
+
+//        val outMetrics = DisplayMetrics()
+//        (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(
+//            outMetrics
+//        )
+//        val px = dp * outMetrics.densityDpi
+
+        var topMenuHeightPx = dpToPx(context, topMenuHeight.toFloat())
+        var leftMenuWidthPx = dpToPx(context, leftMenuWidth.toFloat())
+        var cellHeightPx = dpToPx(context, cellHeight.toFloat())
+
+        leftMenu.layoutParams = LayoutParams(leftMenuWidthPx.roundToInt(), LayoutParams.WRAP_CONTENT)
+        topMenu.layoutParams =  LayoutParams(LayoutParams.MATCH_PARENT, topMenuHeightPx.roundToInt())
 
         removeViews()
 
-        zeroPoint.addView(ZeroPointView(context, topMenuHeight, leftMenuWidth))
+        zeroPoint.addView(ZeroPointView(context, topMenuHeightPx.roundToInt(), leftMenuWidthPx.roundToInt()))
 
 
         var list = ArrayList<String>()
@@ -54,26 +69,38 @@ class MinTimeTableView : LinearLayout {
         list.add("목")
         list.add("금")
 
-        var averageWidth = (timetable.width - leftMenuWidth)/list.size
+        var averageWidth = (timetable.width - leftMenuWidthPx.roundToInt())/list.size
 
         for(i in 0..3) {
-            topMenu.addView(XxisView(context, topMenuHeight, averageWidth, list[i]))
+            topMenu.addView(XxisView(context, topMenuHeightPx.roundToInt(), averageWidth, list[i]))
         }
-        topMenu.addView(XxisEndView(context, topMenuHeight, averageWidth, list[4]))
+        topMenu.addView(
+            XxisEndView(
+                context,
+                topMenuHeightPx.roundToInt(),
+                ((timetable.width - leftMenuWidthPx.roundToInt()) - (4 * averageWidth)),
+                list[4]
+            )
+        )
 
-        for(i in 0..7) {
-            timeCell.addView(YxisView(context, cellHeight, leftMenuWidth, (9 + i).toString()))
+        for(i in 0..11) {
+            timeCell.addView(YxisView(context, cellHeightPx.roundToInt(), leftMenuWidthPx.roundToInt(), (9 + i).toString()))
         }
-        timeCell.addView(YxisEndView(context, cellHeight, leftMenuWidth, "17"))
+        timeCell.addView(YxisEndView(context, cellHeightPx.roundToInt(), leftMenuWidthPx.roundToInt(), "21"))
 
-        for(i in 0..8) {
+        for(i in 0..12) {
             for(j in 0..4) {
-                mainTable.addView(TableCellView(context, cellHeight, averageWidth, (j * averageWidth), (i * cellHeight)))
+                mainTable.addView(TableCellView(context, cellHeightPx.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx.roundToInt())))
             }
         }
     }
 
-    fun removeViews(){
+    private fun dpToPx(context: Context, dp: Float): Float {
+        var displayMetrics = context.resources.displayMetrics
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics)
+    }
+
+    private fun removeViews() {
         zeroPoint.removeAllViews()
         topMenu.removeAllViews()
         timeCell.removeAllViews()
