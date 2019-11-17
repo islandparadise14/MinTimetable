@@ -9,12 +9,14 @@
 
 
     <LinearLayout
+        android:id="@+id/leftMenu"
         android:layout_width="30dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
 
         <LinearLayout
+            android:id="@+id/zeroPoint"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="vertical">
@@ -36,6 +38,7 @@
 
 
         <LinearLayout
+            android:id="@+id/topMenu"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:orientation="horizontal">

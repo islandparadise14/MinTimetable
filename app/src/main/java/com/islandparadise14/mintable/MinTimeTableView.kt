@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.mintable.view.*
 
 class MinTimeTableView : LinearLayout {
     var data: ArrayList<ScheduleEntity>? = null
@@ -37,10 +38,23 @@ class MinTimeTableView : LinearLayout {
         var v = inflater.inflate(R.layout.mintable, this, false)
         addView(v)
 
-//        leftMenu.layoutParams = LayoutParams(leftMenuWidth, LayoutParams.MATCH_PARENT)
-//        topMenu.layoutParams =  LayoutParams(LayoutParams.MATCH_PARENT, topMenuHeight)
-//        zeroPoint.layoutParams = LayoutParams(leftMenuWidth, LayoutParams.MATCH_PARENT)
+        leftMenu.layoutParams = LayoutParams(leftMenuWidth, LayoutParams.MATCH_PARENT)
+        topMenu.layoutParams =  LayoutParams(LayoutParams.MATCH_PARENT, topMenuHeight)
+        zeroPoint.layoutParams = LayoutParams(leftMenuWidth, LayoutParams.MATCH_PARENT)
 
+        zeroPoint.removeAllViews()
+        zeroPoint.addView(ZeroPointView(context))
+
+        topMenu.removeAllViews()
+        var list = ArrayList<String>()
+        list.add("월")
+        list.add("화")
+        list.add("수")
+        list.add("목")
+        for(i in 0..3) {
+            topMenu.addView(XxisView(context, topMenuHeight, list[i]))
+        }
+        topMenu.addView(XxisEndView(context, topMenuHeight))
     }
 
     fun later() {
