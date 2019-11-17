@@ -42,13 +42,7 @@ class MinTimeTableView : LinearLayout {
         addView(v)
     }
 
-    fun update(context: Context) {
-
-//        val outMetrics = DisplayMetrics()
-//        (context.getSystemService(Context.WINDOW_SERVICE) as WindowManager).defaultDisplay.getMetrics(
-//            outMetrics
-//        )
-//        val px = dp * outMetrics.densityDpi
+    fun update(context: Context, list: Array<String>) {
 
         var topMenuHeightPx = dpToPx(context, topMenuHeight.toFloat())
         var leftMenuWidthPx = dpToPx(context, leftMenuWidth.toFloat())
@@ -62,24 +56,17 @@ class MinTimeTableView : LinearLayout {
         zeroPoint.addView(ZeroPointView(context, topMenuHeightPx.roundToInt(), leftMenuWidthPx.roundToInt()))
 
 
-        var list = ArrayList<String>()
-        list.add("월")
-        list.add("화")
-        list.add("수")
-        list.add("목")
-        list.add("금")
-
         var averageWidth = (timetable.width - leftMenuWidthPx.roundToInt())/list.size
 
-        for(i in 0..3) {
+        for(i in 0 until list.size - 1) {
             topMenu.addView(XxisView(context, topMenuHeightPx.roundToInt(), averageWidth, list[i]))
         }
         topMenu.addView(
             XxisEndView(
                 context,
                 topMenuHeightPx.roundToInt(),
-                ((timetable.width - leftMenuWidthPx.roundToInt()) - (4 * averageWidth)),
-                list[4]
+                ((timetable.width - leftMenuWidthPx.roundToInt()) - ((list.size - 1) * averageWidth)),
+                list[list.size - 1]
             )
         )
 
@@ -89,7 +76,7 @@ class MinTimeTableView : LinearLayout {
         timeCell.addView(YxisEndView(context, cellHeightPx.roundToInt(), leftMenuWidthPx.roundToInt(), "21"))
 
         for(i in 0..12) {
-            for(j in 0..4) {
+            for(j in 0 until list.size) {
                 mainTable.addView(TableCellView(context, cellHeightPx.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx.roundToInt())))
             }
         }
