@@ -38,25 +38,25 @@ class MinTimeTableView : LinearLayout {
     @SuppressLint("Recycle")
     fun initView(context: Context, attrs: AttributeSet?) {
         val inflater = LayoutInflater.from(context)
-        var v = inflater.inflate(R.layout.mintable, this, false)
+        val v = inflater.inflate(R.layout.mintable, this, false)
         addView(v)
     }
 
     fun update(context: Context, list: Array<String>) {
 
-        var topMenuHeightPx = dpToPx(context, topMenuHeight.toFloat())
-        var leftMenuWidthPx = dpToPx(context, leftMenuWidth.toFloat())
-        var cellHeightPx = dpToPx(context, cellHeight.toFloat())
+        val topMenuHeightPx = dpToPx(context, topMenuHeight.toFloat())
+        val leftMenuWidthPx = dpToPx(context, leftMenuWidth.toFloat())
+        val cellHeightPx = dpToPx(context, cellHeight.toFloat())
 
         leftMenu.layoutParams = LayoutParams(leftMenuWidthPx.roundToInt(), LayoutParams.WRAP_CONTENT)
-        topMenu.layoutParams =  LayoutParams(LayoutParams.MATCH_PARENT, topMenuHeightPx.roundToInt())
+        topMenu.layoutParams =  LayoutParams(LayoutParams.WRAP_CONTENT, topMenuHeightPx.roundToInt())
 
         removeViews()
 
         zeroPoint.addView(ZeroPointView(context, topMenuHeightPx.roundToInt(), leftMenuWidthPx.roundToInt()))
 
 
-        var averageWidth = (timetable.width - leftMenuWidthPx.roundToInt())/list.size
+        val averageWidth = (timetable.width - leftMenuWidthPx.roundToInt())/list.size
 
         for(i in 0 until list.size - 1) {
             topMenu.addView(XxisView(context, topMenuHeightPx.roundToInt(), averageWidth, list[i]))
@@ -65,7 +65,7 @@ class MinTimeTableView : LinearLayout {
             XxisEndView(
                 context,
                 topMenuHeightPx.roundToInt(),
-                ((timetable.width - leftMenuWidthPx.roundToInt()) - ((list.size - 1) * averageWidth)),
+                averageWidth,
                 list[list.size - 1]
             )
         )
@@ -83,7 +83,7 @@ class MinTimeTableView : LinearLayout {
     }
 
     private fun dpToPx(context: Context, dp: Float): Float {
-        var displayMetrics = context.resources.displayMetrics
+        val displayMetrics = context.resources.displayMetrics
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics)
     }
 
