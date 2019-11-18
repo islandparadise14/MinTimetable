@@ -3,11 +3,8 @@ package com.islandparadise14.mintable
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.mintable.view.*
 import kotlin.math.roundToInt
@@ -17,6 +14,12 @@ class MinTimeTableView : LinearLayout {
     var topMenuHeight: Int = 20
     var leftMenuWidth: Int = 30
     var cellHeight: Int = 50
+    private var tableContext: Context? = null
+
+    private var topMenuHeightPx: Float? = null
+    private var leftMenuWidthPx: Float? = null
+    private var cellHeightPx: Float? = null
+    private var averageWidth: Int = 0
 
     constructor(context: Context) : super(context){
         initView(context, null)
@@ -34,56 +37,91 @@ class MinTimeTableView : LinearLayout {
         initView(context, attrs)
     }
 
-
     @SuppressLint("Recycle")
     fun initView(context: Context, attrs: AttributeSet?) {
-        val inflater = LayoutInflater.from(context)
+        tableContext = context
+        val inflater = LayoutInflater.from(tableContext)
         val v = inflater.inflate(R.layout.mintable, this, false)
         addView(v)
+
+
+        if (attrs == null) {
+            return
+        }
+
+        val array = tableContext!!.obtainStyledAttributes(attrs, R.styleable.MinTimeTableView)
+
+        array.recycle()
     }
 
-    fun update(context: Context, list: Array<String>) {
+    fun baseSetting(topMenuHeight: Int?, leftMenuWidth: Int?, cellHeight: Int?) {
+        if(topMenuHeight != null) this.topMenuHeight = topMenuHeight
+        if(leftMenuWidth != null) this.leftMenuWidth = leftMenuWidth
+        if(cellHeight != null) this.cellHeight = cellHeight
+    }
 
-        val topMenuHeightPx = dpToPx(context, topMenuHeight.toFloat())
-        val leftMenuWidthPx = dpToPx(context, leftMenuWidth.toFloat())
-        val cellHeightPx = dpToPx(context, cellHeight.toFloat())
+    fun initTable(dayList: Array<String>) {
 
-        leftMenu.layoutParams = LayoutParams(leftMenuWidthPx.roundToInt(), LayoutParams.WRAP_CONTENT)
-        topMenu.layoutParams =  LayoutParams(LayoutParams.WRAP_CONTENT, topMenuHeightPx.roundToInt())
+        topMenuHeightPx = dpToPx(topMenuHeight.toFloat())
+        leftMenuWidthPx = dpToPx(leftMenuWidth.toFloat())
+        cellHeightPx = dpToPx(cellHeight.toFloat())
+
+        leftMenu.layoutParams = LayoutParams(leftMenuWidthPx!!.roundToInt(), LayoutParams.WRAP_CONTENT)
+        topMenu.layoutParams =  LayoutParams(LayoutParams.WRAP_CONTENT, topMenuHeightPx!!.roundToInt())
+        mainTable.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
         removeViews()
 
-        zeroPoint.addView(ZeroPointView(context, topMenuHeightPx.roundToInt(), leftMenuWidthPx.roundToInt()))
+        zeroPoint.addView(ZeroPointView(tableContext!!, topMenuHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt()))
 
 
-        val averageWidth = (timetable.width - leftMenuWidthPx.roundToInt())/list.size
+        averageWidth = (timetable.width - leftMenuWidthPx!!.roundToInt())/dayList.size
 
-        for(i in 0 until list.size - 1) {
-            topMenu.addView(XxisView(context, topMenuHeightPx.roundToInt(), averageWidth, list[i]))
-        }
-        topMenu.addView(
-            XxisEndView(
-                context,
-                topMenuHeightPx.roundToInt(),
-                averageWidth,
-                list[list.size - 1]
+        for(i in 0 until dayList.size) {
+            if(i == dayList.size - 1) topMenu.addView(
+                XxisEndView(
+                    tableContext!!,
+                    topMenuHeightPx!!.roundToInt(),
+                    averageWidth,
+                    dayList[dayList.size - 1]
+                )
             )
-        )
-
-        for(i in 0..11) {
-            timeCell.addView(YxisView(context, cellHeightPx.roundToInt(), leftMenuWidthPx.roundToInt(), (9 + i).toString()))
+            else topMenu.addView(XxisView(tableContext!!, topMenuHeightPx!!.roundToInt(), averageWidth, dayList[i]))
         }
-        timeCell.addView(YxisEndView(context, cellHeightPx.roundToInt(), leftMenuWidthPx.roundToInt(), "21"))
 
-        for(i in 0..12) {
-            for(j in 0 until list.size) {
-                mainTable.addView(TableCellView(context, cellHeightPx.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx.roundToInt())))
+        for(i in 0 until 12) {
+            for(j in 0 until dayList.size) {
+                mainTable.addView(TableCellView(tableContext!!, cellHeightPx!!.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx!!.roundToInt())))
             }
+            if(i == 11) timeCell.addView(YxisEndView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (9 + i).toString()))
+            else timeCell.addView(YxisView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (9 + i).toString()))
         }
     }
 
-    private fun dpToPx(context: Context, dp: Float): Float {
-        val displayMetrics = context.resources.displayMetrics
+    fun addSchedules(schedules: ArrayList<ScheduleEntity>) {
+        schedules.map {entity ->
+            if(entity.originId != null && entity.scheduleDay != null && entity.startTime != null && entity.endTime != null)
+                mainTable.addView(
+                    ScheduleView(
+                        tableContext!!,
+                        entity.originId!!,
+                        entity.scheduleName,
+                        entity.roomInfo,
+                        entity.scheduleDay!!,
+                        entity.startTime!!,
+                        entity.endTime!!,
+                        entity.backgroundColor,
+                        entity.textColor,
+                        cellHeightPx!!.roundToInt(),
+                        averageWidth,
+                        entity.onClick
+                    )
+                )
+        }
+    }
+
+    private fun dpToPx(dp: Float): Float {
+        val displayMetrics = tableContext!!.resources.displayMetrics
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics)
     }
 

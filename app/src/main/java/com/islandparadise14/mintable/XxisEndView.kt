@@ -10,10 +10,10 @@ import kotlinx.android.synthetic.main.x_xis_end.view.*
 @SuppressLint("ViewConstructor")
 class XxisEndView(context: Context, height: Int, width: Int, text: String) : LinearLayout(context) {
     init {
-        initView(context, height, width, text, null)
+        initView(context, height, width, text)
     }
 
-    fun initView(context: Context, height: Int, width: Int, text: String, attrs: AttributeSet?) {
+    fun initView(context: Context, height: Int, width: Int, text: String) {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.x_xis_end, this, true)
 

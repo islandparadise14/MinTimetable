@@ -11,10 +11,10 @@ import kotlinx.android.synthetic.main.y_xis_end.view.*
 @SuppressLint("ViewConstructor")
 class YxisEndView(context: Context, height: Int, width: Int, text: String) : LinearLayout(context) {
     init {
-        initView(context, height, width, text, null)
+        initView(context, height, width, text)
     }
 
-    fun initView(context: Context, height: Int, width: Int, text: String, attrs: AttributeSet?){
+    private fun initView(context: Context, height: Int, width: Int, text: String){
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.y_xis_end, this, true)
 
