@@ -1,5 +1,7 @@
 package com.islandparadise14.mintable
 
+import android.view.View
+
 class ScheduleEntity(
     var originId: Int? = null,
     var scheduleName: String = "",
@@ -10,9 +12,13 @@ class ScheduleEntity(
     var backgroundColor: String = "#dddddd",
     var textColor: String = "#ffffff"
 ) {
-    var onClick: () -> Unit = {}
+    var scheduleClickListener: OnScheduleClickListener? = null
 
-    fun setOnClickListener(listener: () -> Unit) {
-        onClick = listener
+    fun setOnScheduleClickListener(listener: OnScheduleClickListener) {
+        scheduleClickListener = listener
+    }
+
+    interface OnScheduleClickListener {
+        fun scheduleClicked(originId: Int)
     }
 }

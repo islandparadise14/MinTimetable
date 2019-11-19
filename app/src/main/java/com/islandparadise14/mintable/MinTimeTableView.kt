@@ -9,17 +9,23 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.mintable.view.*
 import kotlin.math.roundToInt
 
-class MinTimeTableView : LinearLayout {
+class MinTimeTableView : LinearLayout, Utils {
     var data: ArrayList<ScheduleEntity>? = null
     var topMenuHeight: Int = 20
     var leftMenuWidth: Int = 30
     var cellHeight: Int = 50
+
     private var tableContext: Context? = null
 
     private var topMenuHeightPx: Float? = null
     private var leftMenuWidthPx: Float? = null
     private var cellHeightPx: Float? = null
     private var averageWidth: Int = 0
+
+    private var tableStartTime: Int = 9
+    private var tableEndTime: Int = 16
+
+    private var dayList: Array<String>? = null
 
     constructor(context: Context) : super(context){
         initView(context, null)
@@ -54,51 +60,58 @@ class MinTimeTableView : LinearLayout {
         array.recycle()
     }
 
-    fun baseSetting(topMenuHeight: Int?, leftMenuWidth: Int?, cellHeight: Int?) {
-        if(topMenuHeight != null) this.topMenuHeight = topMenuHeight
-        if(leftMenuWidth != null) this.leftMenuWidth = leftMenuWidth
-        if(cellHeight != null) this.cellHeight = cellHeight
+    fun baseSetting(topMenuHeight: Int, leftMenuWidth: Int, cellHeight: Int) {
+        this.topMenuHeight = topMenuHeight
+        this.leftMenuWidth = leftMenuWidth
+        this.cellHeight = cellHeight
     }
 
     fun initTable(dayList: Array<String>) {
+        this.dayList = dayList
 
-        topMenuHeightPx = dpToPx(topMenuHeight.toFloat())
-        leftMenuWidthPx = dpToPx(leftMenuWidth.toFloat())
-        cellHeightPx = dpToPx(cellHeight.toFloat())
+        topMenuHeightPx = dpToPx(tableContext!!, topMenuHeight.toFloat())
+        leftMenuWidthPx = dpToPx(tableContext!!, leftMenuWidth.toFloat())
+        cellHeightPx = dpToPx(tableContext!!, cellHeight.toFloat())
 
         leftMenu.layoutParams = LayoutParams(leftMenuWidthPx!!.roundToInt(), LayoutParams.WRAP_CONTENT)
         topMenu.layoutParams =  LayoutParams(LayoutParams.WRAP_CONTENT, topMenuHeightPx!!.roundToInt())
         mainTable.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
-        removeViews()
+        removeViews(arrayOf(zeroPoint, topMenu, timeCell, mainTable))
 
         zeroPoint.addView(ZeroPointView(tableContext!!, topMenuHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt()))
 
 
-        averageWidth = (timetable.width - leftMenuWidthPx!!.roundToInt())/dayList.size
+        averageWidth = (timetable.width - leftMenuWidthPx!!.roundToInt())/(this.dayList!!).size
 
-        for(i in 0 until dayList.size) {
-            if(i == dayList.size - 1) topMenu.addView(
+        for(i in 0 until (this.dayList!!).size) {
+            if(i == (this.dayList!!).size - 1) topMenu.addView(
                 XxisEndView(
                     tableContext!!,
                     topMenuHeightPx!!.roundToInt(),
                     averageWidth,
-                    dayList[dayList.size - 1]
+                    (this.dayList!!)[(this.dayList!!).size - 1]
                 )
             )
             else topMenu.addView(XxisView(tableContext!!, topMenuHeightPx!!.roundToInt(), averageWidth, dayList[i]))
         }
 
-        for(i in 0 until 12) {
-            for(j in 0 until dayList.size) {
-                mainTable.addView(TableCellView(tableContext!!, cellHeightPx!!.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx!!.roundToInt())))
-            }
-            if(i == 11) timeCell.addView(YxisEndView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (9 + i).toString()))
-            else timeCell.addView(YxisView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (9 + i).toString()))
-        }
+        recycleTimeCell()
     }
 
     fun addSchedules(schedules: ArrayList<ScheduleEntity>) {
+        tableStartTime = 9
+        tableEndTime = 16
+        schedules.map {entity ->
+            if(getHour(entity.startTime!!) < tableStartTime)
+                tableStartTime = getHour(entity.startTime!!)
+            if(getHour(entity.endTime!!) >= tableEndTime)
+                tableEndTime = getHour(entity.endTime!!) + 1
+        }
+
+        removeViews(arrayOf(timeCell))
+        recycleTimeCell()
+
         schedules.map {entity ->
             if(entity.originId != null && entity.scheduleDay != null && entity.startTime != null && entity.endTime != null)
                 mainTable.addView(
@@ -108,27 +121,28 @@ class MinTimeTableView : LinearLayout {
                         entity.scheduleName,
                         entity.roomInfo,
                         entity.scheduleDay!!,
-                        entity.startTime!!,
-                        entity.endTime!!,
+                        getTotalMinute(entity.startTime!!),
+                        getTotalMinute(entity.endTime!!),
                         entity.backgroundColor,
                         entity.textColor,
                         cellHeightPx!!.roundToInt(),
                         averageWidth,
-                        entity.onClick
+                        entity.scheduleClickListener!!,
+                        tableStartTime
                     )
                 )
         }
     }
 
-    private fun dpToPx(dp: Float): Float {
-        val displayMetrics = tableContext!!.resources.displayMetrics
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics)
+    private fun recycleTimeCell () {
+        for(i in 0 until (tableEndTime - tableStartTime)) {
+            for(j in 0 until dayList!!.size) {
+                mainTable.addView(TableCellView(tableContext!!, cellHeightPx!!.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx!!.roundToInt())))
+            }
+            if(i == (tableEndTime - tableStartTime)-1) timeCell.addView(YxisEndView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (tableStartTime + i).toString()))
+            else timeCell.addView(YxisView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (tableStartTime + i).toString()))
+        }
     }
 
-    private fun removeViews() {
-        zeroPoint.removeAllViews()
-        topMenu.removeAllViews()
-        timeCell.removeAllViews()
-        mainTable.removeAllViews()
-    }
+
 }
