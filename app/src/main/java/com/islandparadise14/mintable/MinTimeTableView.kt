@@ -27,6 +27,8 @@ class MinTimeTableView : LinearLayout, Utils {
 
     private var dayList: Array<String>? = null
 
+    private var radiusStyle: Int = 0
+
     constructor(context: Context) : super(context){
         initView(context, null)
     }
@@ -57,6 +59,8 @@ class MinTimeTableView : LinearLayout, Utils {
 
         val array = tableContext!!.obtainStyledAttributes(attrs, R.styleable.MinTimeTableView)
 
+        radiusStyle = array.getInt(R.styleable.MinTimeTableView_radius_option, 0)
+
         array.recycle()
     }
 
@@ -67,6 +71,8 @@ class MinTimeTableView : LinearLayout, Utils {
     }
 
     fun initTable(dayList: Array<String>) {
+        tableStartTime = 9
+        tableEndTime = 16
         this.dayList = dayList
 
         topMenuHeightPx = dpToPx(tableContext!!, topMenuHeight.toFloat())
@@ -109,7 +115,7 @@ class MinTimeTableView : LinearLayout, Utils {
                 tableEndTime = getHour(entity.endTime!!) + 1
         }
 
-        removeViews(arrayOf(timeCell))
+        removeViews(arrayOf(timeCell, mainTable))
         recycleTimeCell()
 
         schedules.map {entity ->
@@ -128,7 +134,8 @@ class MinTimeTableView : LinearLayout, Utils {
                         cellHeightPx!!.roundToInt(),
                         averageWidth,
                         entity.scheduleClickListener!!,
-                        tableStartTime
+                        tableStartTime,
+                        radiusStyle
                     )
                 )
         }
