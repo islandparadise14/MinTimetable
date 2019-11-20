@@ -1,21 +1,21 @@
 package com.islandparadise14.mintable
 
-enum class ScheduleDay(val day: Int) {
-    MONDAY(0),
-    TUESDAY(1),
-    WEDNESDAY(2),
-    THURSDAY(3),
-    FRIDAY(4),
-    SATURDAY(5),
-    SUNDAY(6)
+object ScheduleDay {
+    const val MONDAY = 0
+    const val TUESDAY = 1
+    const val WEDNESDAY = 2
+    const val THURSDAY = 3
+    const val FRIDAY = 4
+    const val SATURDAY = 5
+    const val SUNDAY = 6
 }
 
-enum class ScheduleDayOption(val day: Int) {
-    SUNDAY(0),
-    MONDAY(1),
-    TUESDAY(2),
-    WEDNESDAY(3),
-    THURSDAY(4),
-    FRIDAY(5),
-    SATURDAY(6)
+object ScheduleDayOption {
+    const val SUNDAY = 0
+    const val MONDAY = 1
+    const val TUESDAY = 2
+    const val WEDNESDAY = 3
+    const val THURSDAY = 4
+    const val FRIDAY = 5
+    const val SATURDAY = 6
 }

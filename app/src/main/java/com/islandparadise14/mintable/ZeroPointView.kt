@@ -1,20 +1,24 @@
 package com.islandparadise14.mintable
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.zero_point.view.*
 
-class ZeroPointView(context: Context, height: Int, width: Int) : LinearLayout(context) {
+@SuppressLint("ViewConstructor")
+class ZeroPointView(context: Context, height: Int, width: Int, menuColor: Int) : LinearLayout(context) {
     init {
-        initView(context, height, width)
+        initView(context, height, width, menuColor)
     }
 
-    private fun initView(context: Context, height: Int, width: Int) {
+    private fun initView(context: Context, height: Int, width: Int, menuColor: Int) {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.zero_point, this, true)
 
         zeroLayout.layoutParams = LayoutParams(width, height)
+        if(menuColor != 0)
+            zeroItem.setBackgroundColor(menuColor)
     }
 }

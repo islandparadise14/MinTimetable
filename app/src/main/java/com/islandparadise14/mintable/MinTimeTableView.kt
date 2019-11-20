@@ -28,6 +28,10 @@ class MinTimeTableView : LinearLayout, Utils {
     private var dayList: Array<String>? = null
 
     private var radiusStyle: Int = 0
+    private var twentyFourHourClock = true
+    private var cellColor = 0
+    private var menuColor = 0
+    private var lineColor = 0
 
     constructor(context: Context) : super(context){
         initView(context, null)
@@ -60,6 +64,16 @@ class MinTimeTableView : LinearLayout, Utils {
         val array = tableContext!!.obtainStyledAttributes(attrs, R.styleable.MinTimeTableView)
 
         radiusStyle = array.getInt(R.styleable.MinTimeTableView_radius_option, 0)
+        twentyFourHourClock = array.getBoolean(R.styleable.MinTimeTableView_setTwentyFourHourClock, true)
+        cellColor = array.getColor(R.styleable.MinTimeTableView_cellColor, 0)
+        menuColor = array.getColor(R.styleable.MinTimeTableView_menuColor, 0)
+        lineColor = array.getColor(R.styleable.MinTimeTableView_lineColor, 0)
+
+        if(lineColor != 0) {
+            mainTable.setBackgroundColor(lineColor)
+            topMenu.setBackgroundColor(lineColor)
+            leftMenu.setBackgroundColor(lineColor)
+        }
 
         array.recycle()
     }
@@ -85,7 +99,7 @@ class MinTimeTableView : LinearLayout, Utils {
 
         removeViews(arrayOf(zeroPoint, topMenu, timeCell, mainTable))
 
-        zeroPoint.addView(ZeroPointView(tableContext!!, topMenuHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt()))
+        zeroPoint.addView(ZeroPointView(tableContext!!, topMenuHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), menuColor))
 
 
         averageWidth = (timetable.width - leftMenuWidthPx!!.roundToInt())/(this.dayList!!).size
@@ -96,23 +110,27 @@ class MinTimeTableView : LinearLayout, Utils {
                     tableContext!!,
                     topMenuHeightPx!!.roundToInt(),
                     averageWidth,
-                    (this.dayList!!)[(this.dayList!!).size - 1]
+                    (this.dayList!!)[(this.dayList!!).size - 1],
+                    menuColor
                 )
             )
-            else topMenu.addView(XxisView(tableContext!!, topMenuHeightPx!!.roundToInt(), averageWidth, dayList[i]))
+            else topMenu.addView(XxisView(tableContext!!, topMenuHeightPx!!.roundToInt(), averageWidth, dayList[i], menuColor))
         }
 
         recycleTimeCell()
     }
 
     fun addSchedules(schedules: ArrayList<ScheduleEntity>) {
-        tableStartTime = 9
+        tableStartTime = getHour(schedules[0].startTime!!)
         tableEndTime = 16
         schedules.map {entity ->
             if(getHour(entity.startTime!!) < tableStartTime)
                 tableStartTime = getHour(entity.startTime!!)
             if(getHour(entity.endTime!!) >= tableEndTime)
                 tableEndTime = getHour(entity.endTime!!) + 1
+        }
+        if ((tableEndTime - tableStartTime) < 7) {
+            tableEndTime = tableStartTime + 7
         }
 
         removeViews(arrayOf(timeCell, mainTable))
@@ -134,6 +152,7 @@ class MinTimeTableView : LinearLayout, Utils {
                         cellHeightPx!!.roundToInt(),
                         averageWidth,
                         entity.scheduleClickListener!!,
+                        entity.mOnClickListener,
                         tableStartTime,
                         radiusStyle
                     )
@@ -144,12 +163,10 @@ class MinTimeTableView : LinearLayout, Utils {
     private fun recycleTimeCell () {
         for(i in 0 until (tableEndTime - tableStartTime)) {
             for(j in 0 until dayList!!.size) {
-                mainTable.addView(TableCellView(tableContext!!, cellHeightPx!!.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx!!.roundToInt())))
+                mainTable.addView(TableCellView(tableContext!!, cellHeightPx!!.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx!!.roundToInt()), cellColor))
             }
-            if(i == (tableEndTime - tableStartTime)-1) timeCell.addView(YxisEndView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (tableStartTime + i).toString()))
-            else timeCell.addView(YxisView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (tableStartTime + i).toString()))
+            if(i == (tableEndTime - tableStartTime)-1) timeCell.addView(YxisEndView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (tableStartTime + i).toString(), menuColor))
+            else timeCell.addView(YxisView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (tableStartTime + i).toString(), menuColor))
         }
     }
-
-
 }

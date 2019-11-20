@@ -8,16 +8,18 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.x_xis_end.view.*
 
 @SuppressLint("ViewConstructor")
-class XxisEndView(context: Context, height: Int, width: Int, text: String) : LinearLayout(context) {
+class XxisEndView(context: Context, height: Int, width: Int, text: String, menuColor: Int) : LinearLayout(context) {
     init {
-        initView(context, height, width, text)
+        initView(context, height, width, text, menuColor)
     }
 
-    fun initView(context: Context, height: Int, width: Int, text: String) {
+    fun initView(context: Context, height: Int, width: Int, text: String, menuColor: Int) {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.x_xis_end, this, true)
 
         topMenuEndItem.layoutParams = LayoutParams(width, height)
         xXisEnd.text = text
+        if(menuColor != 0)
+            xXisEnd.setBackgroundColor(menuColor)
     }
 }

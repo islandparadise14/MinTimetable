@@ -14,7 +14,7 @@ class ScheduleView(context: Context,
                    originId: Int,
                    scheduleName: String,
                    roomInfo: String,
-                   scheduleDay: ScheduleDay,
+                   scheduleDay: Int,
                    startMinute: Int,
                    endMinute: Int,
                    backgroundColor: String,
@@ -22,6 +22,7 @@ class ScheduleView(context: Context,
                    height: Int,
                    width: Int,
                    scheduleClickListener: ScheduleEntity.OnScheduleClickListener?,
+                   mOnClickListener: OnClickListener?,
                    tableStartTime: Int,
                    radiusStyle: Int
 ) : LinearLayout(context), Utils {
@@ -39,6 +40,7 @@ class ScheduleView(context: Context,
             height,
             width,
             scheduleClickListener,
+            mOnClickListener,
             tableStartTime,
             radiusStyle
         )
@@ -49,7 +51,7 @@ class ScheduleView(context: Context,
                         originId: Int,
                         scheduleName: String,
                         roomInfo: String,
-                        scheduleDay: ScheduleDay,
+                        scheduleDay: Int,
                         startMinute: Int,
                         endMinute: Int,
                         backgroundColor: String,
@@ -57,6 +59,7 @@ class ScheduleView(context: Context,
                         height: Int,
                         width: Int,
                         scheduleClickListener: ScheduleEntity.OnScheduleClickListener?,
+                        mOnClickListener: OnClickListener?,
                         tableStartTime: Int,
                         radiusStyle: Int
     ) {
@@ -67,19 +70,20 @@ class ScheduleView(context: Context,
 
         val layoutSetting = LayoutParams(width, ((height * duration).toDouble() / 60).toInt())
         layoutSetting.topMargin = (((height * startMinute).toDouble() / 60) - (height * tableStartTime)).toInt()
-        layoutSetting.leftMargin = width * scheduleDay.day
+        layoutSetting.leftMargin = width * scheduleDay
 
         tableItem.layoutParams = layoutSetting
 
         tableItem.setOnClickListener {
             scheduleClickListener?.scheduleClicked(originId)
+            mOnClickListener?.onClick(tableItem)
         }
 
 
         val layoutText = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
-        val cornerRadius = dpToPx(context, Companion.RADIUS.toFloat())
-        val roundRadius = dpToPx(context, Companion.ROUND.toFloat())
+        val cornerRadius = dpToPx(context, RADIUS.toFloat())
+        val roundRadius = dpToPx(context, ROUND.toFloat())
 
         val border = GradientDrawable()
         border.setColor(Color.parseColor(backgroundColor))
