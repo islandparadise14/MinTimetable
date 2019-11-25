@@ -2,10 +2,8 @@ package com.islandparadise14.mintable
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.y_xis.view.*
 import kotlinx.android.synthetic.main.y_xis_end.view.*
 
 @SuppressLint("ViewConstructor")

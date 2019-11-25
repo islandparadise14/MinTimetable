@@ -3,17 +3,18 @@ package com.islandparadise14.mintable
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.mintable.view.*
 import kotlin.math.roundToInt
 
 class MinTimeTableView : LinearLayout, Utils {
-    var data: ArrayList<ScheduleEntity>? = null
-    var topMenuHeight: Int = 20
-    var leftMenuWidth: Int = 30
-    var cellHeight: Int = 50
+    private var topMenuHeight: Int = 20
+    private var leftMenuWidth: Int = 30
+    private var cellHeight: Int = 50
+
+    private var isRatio: Boolean = false
+    private var cellRatio: Float = 0f
 
     private var tableContext: Context? = null
 
@@ -21,6 +22,7 @@ class MinTimeTableView : LinearLayout, Utils {
     private var leftMenuWidthPx: Float? = null
     private var cellHeightPx: Float? = null
     private var averageWidth: Int = 0
+    private var widthPaddingPx: Float? = null
 
     private var tableStartTime: Int = 9
     private var tableEndTime: Int = 16
@@ -32,6 +34,9 @@ class MinTimeTableView : LinearLayout, Utils {
     private var cellColor = 0
     private var menuColor = 0
     private var lineColor = 0
+
+    private var isFullScreen = false
+    private var widthPadding = 0
 
     constructor(context: Context) : super(context){
         initView(context, null)
@@ -75,6 +80,9 @@ class MinTimeTableView : LinearLayout, Utils {
             leftMenu.setBackgroundColor(lineColor)
         }
 
+        isFullScreen = array.getBoolean(R.styleable.MinTimeTableView_isFullWidth, false)
+        widthPadding = array.getInteger(R.styleable.MinTimeTableView_widthPadding, 0)
+
         array.recycle()
     }
 
@@ -82,6 +90,14 @@ class MinTimeTableView : LinearLayout, Utils {
         this.topMenuHeight = topMenuHeight
         this.leftMenuWidth = leftMenuWidth
         this.cellHeight = cellHeight
+        isRatio = false
+    }
+
+    fun ratioCellSetting(topMenuHeight: Int, leftMenuWidth: Int, cellRatio: Float) {
+        this.topMenuHeight = topMenuHeight
+        this.leftMenuWidth = leftMenuWidth
+        this.cellRatio = cellRatio
+        isRatio = true
     }
 
     fun initTable(dayList: Array<String>) {
@@ -91,7 +107,19 @@ class MinTimeTableView : LinearLayout, Utils {
 
         topMenuHeightPx = dpToPx(tableContext!!, topMenuHeight.toFloat())
         leftMenuWidthPx = dpToPx(tableContext!!, leftMenuWidth.toFloat())
-        cellHeightPx = dpToPx(tableContext!!, cellHeight.toFloat())
+        widthPaddingPx = dpToPx(tableContext!!, widthPadding.toFloat())
+
+        averageWidth = if (isFullScreen)
+            (getWindowWidth(tableContext!!) - (widthPaddingPx!!.roundToInt() * 2) - leftMenuWidthPx!!.roundToInt()) / (this.dayList!!).size
+        else
+            (timetable.width - leftMenuWidthPx!!.roundToInt()) / (this.dayList!!).size
+
+        if (isFullScreen) {
+            timetable.setPadding(widthPaddingPx!!.roundToInt(), 0, widthPaddingPx!!.roundToInt(), 0)
+        }
+
+        cellHeightPx = if (isRatio) averageWidth * cellRatio
+        else dpToPx(tableContext!!, cellHeight.toFloat())
 
         leftMenu.layoutParams = LayoutParams(leftMenuWidthPx!!.roundToInt(), LayoutParams.WRAP_CONTENT)
         topMenu.layoutParams =  LayoutParams(LayoutParams.WRAP_CONTENT, topMenuHeightPx!!.roundToInt())
@@ -100,9 +128,6 @@ class MinTimeTableView : LinearLayout, Utils {
         removeViews(arrayOf(zeroPoint, topMenu, timeCell, mainTable))
 
         zeroPoint.addView(ZeroPointView(tableContext!!, topMenuHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), menuColor))
-
-
-        averageWidth = (timetable.width - leftMenuWidthPx!!.roundToInt())/(this.dayList!!).size
 
         for(i in 0 until (this.dayList!!).size) {
             if(i == (this.dayList!!).size - 1) topMenu.addView(
@@ -120,18 +145,11 @@ class MinTimeTableView : LinearLayout, Utils {
         recycleTimeCell()
     }
 
-    fun addSchedules(schedules: ArrayList<ScheduleEntity>) {
-        tableStartTime = getHour(schedules[0].startTime!!)
-        tableEndTime = 16
-        schedules.map {entity ->
-            if(getHour(entity.startTime!!) < tableStartTime)
-                tableStartTime = getHour(entity.startTime!!)
-            if(getHour(entity.endTime!!) >= tableEndTime)
-                tableEndTime = getHour(entity.endTime!!) + 1
+    fun updateSchedules(schedules: ArrayList<ScheduleEntity>) {
+        if (schedules.size == 0) {
+            return
         }
-        if ((tableEndTime - tableStartTime) < 7) {
-            tableEndTime = tableStartTime + 7
-        }
+        calculateTime(schedules)
 
         removeViews(arrayOf(timeCell, mainTable))
         recycleTimeCell()
@@ -151,12 +169,26 @@ class MinTimeTableView : LinearLayout, Utils {
                         entity.textColor,
                         cellHeightPx!!.roundToInt(),
                         averageWidth,
-                        entity.scheduleClickListener!!,
+                        entity.scheduleClickListener,
                         entity.mOnClickListener,
                         tableStartTime,
                         radiusStyle
                     )
                 )
+        }
+    }
+
+    private fun calculateTime (schedules: ArrayList<ScheduleEntity>) {
+        tableStartTime = getHour(schedules[0].startTime!!)
+        tableEndTime = 16
+        schedules.map {entity ->
+            if(getHour(entity.startTime!!) < tableStartTime)
+                tableStartTime = getHour(entity.startTime!!)
+            if(getHour(entity.endTime!!) >= tableEndTime)
+                tableEndTime = getHour(entity.endTime!!) + 1
+        }
+        if ((tableEndTime - tableStartTime) < 7) {
+            tableEndTime = tableStartTime + 7
         }
     }
 

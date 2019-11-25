@@ -12,6 +12,7 @@ class ScheduleEntity(
     var backgroundColor: String = "#dddddd",
     var textColor: String = "#ffffff"
 ) {
+
     var scheduleClickListener: OnScheduleClickListener? = null
     var mOnClickListener: View.OnClickListener? = null
 

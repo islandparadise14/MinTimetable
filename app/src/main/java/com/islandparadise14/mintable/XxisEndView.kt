@@ -2,7 +2,6 @@ package com.islandparadise14.mintable
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.x_xis_end.view.*
@@ -13,7 +12,7 @@ class XxisEndView(context: Context, height: Int, width: Int, text: String, menuC
         initView(context, height, width, text, menuColor)
     }
 
-    fun initView(context: Context, height: Int, width: Int, text: String, menuColor: Int) {
+    private fun initView(context: Context, height: Int, width: Int, text: String, menuColor: Int) {
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.x_xis_end, this, true)
 

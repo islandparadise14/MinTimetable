@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.LinearLayout
@@ -87,6 +88,7 @@ class ScheduleView(context: Context,
 
         val border = GradientDrawable()
         border.setColor(Color.parseColor(backgroundColor))
+        Log.d("color", backgroundColor)
         border.shape = GradientDrawable.RECTANGLE
 
         when (radiusStyle) {

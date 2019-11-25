@@ -11,5 +11,7 @@
         <attr name="menuColor" format="reference|color"/>
         <attr name="lineColor" format="reference|color"/>
         <attr name="setTwentyFourHourClock" format="boolean"/>
+        <attr name="isFullWidth" format="boolean"/>
+        <attr name="widthPadding" format="integer"/>
     </declare-styleable>
 </resources>
