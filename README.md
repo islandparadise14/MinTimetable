@@ -56,7 +56,7 @@ override fun onWindowFocusChanged(hasFocus: Boolean) {
     table.initTable(day)
 }
 ```
-![screenshot](./screenshot_2.png)  
+![screenshot](./screenshot_2.png){: width="30%"}
 
 ### Add Schedules
 ```kotlin
@@ -84,7 +84,7 @@ override fun onWindowFocusChanged(hasFocus: Boolean) {
     table.updateSchedules(scheduleList)
 }
 ```
-![screenshot](./screenshot_3.png)  
+![screenshot](./screenshot_3.png){: width="30%"}
 
 If you want to start on Sunday,
 use 'ScheduleDayOption.${weekday}' (SUNDAY ~ SATURDAY)
@@ -92,7 +92,7 @@ use 'ScheduleDayOption.${weekday}' (SUNDAY ~ SATURDAY)
 ## Optimization Option
 Make the view fullWidth
 
-![screenshot](./screenshot_4.png) 
+![screenshot](./screenshot_4.png){: width="30%"}
 
 add attribute 'isFullWidth' (default: false)
 ```xml
