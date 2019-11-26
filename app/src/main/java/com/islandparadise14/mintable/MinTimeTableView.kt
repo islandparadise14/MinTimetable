@@ -197,8 +197,13 @@ class MinTimeTableView : LinearLayout, Utils {
             for(j in 0 until dayList!!.size) {
                 mainTable.addView(TableCellView(tableContext!!, cellHeightPx!!.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx!!.roundToInt()), cellColor))
             }
-            if(i == (tableEndTime - tableStartTime)-1) timeCell.addView(YxisEndView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (tableStartTime + i).toString(), menuColor))
-            else timeCell.addView(YxisView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), (tableStartTime + i).toString(), menuColor))
+            val hour = if (twentyFourHourClock) (tableStartTime + i)
+            else {
+                if ((tableStartTime + i)!=12) (tableStartTime + i) % 12
+                else (tableStartTime + i)
+            }
+            if(i == (tableEndTime - tableStartTime)-1) timeCell.addView(YxisEndView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), hour.toString(), menuColor))
+            else timeCell.addView(YxisView(tableContext!!, cellHeightPx!!.roundToInt(), leftMenuWidthPx!!.roundToInt(), hour.toString(), menuColor))
         }
     }
 }
