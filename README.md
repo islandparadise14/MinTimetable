@@ -87,7 +87,7 @@ override fun onWindowFocusChanged(hasFocus: Boolean) {
 ![screenshot](./screenshot_3.png)  
 
 If you want to start on Sunday,
-using 'ScheduleDayOption.${weekday}' (SUNDAY ~ SATURDAY)
+use 'ScheduleDayOption.${weekday}' (SUNDAY ~ SATURDAY)
 
 ## Optimization Option
 Make the view fullWidth
