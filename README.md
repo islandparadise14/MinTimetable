@@ -172,3 +172,14 @@ add attribute 'cellColor', 'lineColor', 'menuColor'
 
 ![screenshot](./screenshot_6.png)
 
+### TwentyFourHourClock option
+add attribute 'setTwentyFourHourClock' (default: true)
+```xml
+<com.islandparadise14.mintable.MinTimeTableView
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:setTwentyFourHourClock="false" />
+```
+
+![screenshot](./screenshot_7.png)
