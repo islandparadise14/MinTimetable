@@ -67,7 +67,7 @@ val schedule = ScheduleEntity(
                   32, //originId
                   "Database", //scheduleName
                   "IT Building 301", //roomInfo
-                  ScheduleDay.TUESDAY, //scheduleDay
+                  ScheduleDay.TUESDAY, //ScheduleDay object (MONDAY ~ SUNDAY)
                   "8:20", //startTime
                   "10:30", //endTime
                   "#73fcae68", //backgroundColor (optional)
@@ -85,6 +85,9 @@ override fun onWindowFocusChanged(hasFocus: Boolean) {
 }
 ```
 ![screenshot](./screenshot_3.png)  
+
+If you want to start on Sunday,
+using 'ScheduleDayOption.${weekday}' (SUNDAY ~ SATURDAY)
 
 ## Optimization Option
 Make the view fullWidth
