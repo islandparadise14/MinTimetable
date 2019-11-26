@@ -170,7 +170,7 @@ add attribute 'cellColor', 'lineColor', 'menuColor'
                 app:menuColor="@color/colorPrimary" />
 ```
 
-![screenshot](./screenshot_6.png)
+<img src="./screenshot_6.png" width="30%">
 
 ### TwentyFourHourClock option
 add attribute 'setTwentyFourHourClock' (default: true)
