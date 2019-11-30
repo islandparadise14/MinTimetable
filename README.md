@@ -3,6 +3,9 @@ MinTimeTable is Customizable library to generate **Timetable** of University.
 If you only add a course, **the course time is automatically calculated** and added to the timetable.   
 (default 09:00 ~ 16:00)
 
+## iOS version
+[Elliotable](https://github.com/della-padula/Elliotable)  
+
 ### Author Information
 ----   
 Timetable Library for Android Development   
