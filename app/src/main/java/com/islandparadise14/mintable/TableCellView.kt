@@ -7,14 +7,36 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.item_table_cell.view.*
 
 @SuppressLint("ViewConstructor")
-class TableCellView(context: Context, height: Int, width: Int, marginLeft: Int, marginTop: Int, cellColor: Int) : LinearLayout(context) {
+class TableCellView(context: Context,
+                    height: Int,
+                    width: Int,
+                    marginLeft: Int,
+                    marginTop: Int,
+                    cellColor: Int,
+                    timeCellClickListener: OnTimeCellClickListener?,
+                    scheduleDay: Int,
+                    time: Int
+) : LinearLayout(context) {
     init {
-        initView(context, height, width, marginLeft, marginTop, cellColor)
+        initView(context, height, width, marginLeft, marginTop, cellColor, timeCellClickListener, scheduleDay, time)
     }
 
-    private fun initView(context: Context, height: Int, width: Int, marginLeft: Int, marginTop: Int, cellColor: Int){
+    private fun initView(context: Context,
+                         height: Int,
+                         width: Int,
+                         marginLeft: Int,
+                         marginTop: Int,
+                         cellColor: Int,
+                         timeCellClickListener: OnTimeCellClickListener?,
+                         scheduleDay: Int,
+                         time: Int
+    ){
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.item_table_cell, this, true)
+
+        cell.setOnClickListener {
+            timeCellClickListener?.timeCellClicked(scheduleDay, time)
+        }
 
         val layoutSetting = LayoutParams(width, height)
         layoutSetting.leftMargin = marginLeft

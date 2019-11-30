@@ -4,44 +4,26 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.item_schedule.view.*
 
 @SuppressLint("ViewConstructor")
 class ScheduleView(context: Context,
-                   originId: Int,
-                   scheduleName: String,
-                   roomInfo: String,
-                   scheduleDay: Int,
-                   startMinute: Int,
-                   endMinute: Int,
-                   backgroundColor: String,
-                   textColor: String,
+                   entity: ScheduleEntity,
                    height: Int,
                    width: Int,
-                   scheduleClickListener: ScheduleEntity.OnScheduleClickListener?,
-                   mOnClickListener: OnClickListener?,
+                   scheduleClickListener: OnScheduleClickListener?,
                    tableStartTime: Int,
                    radiusStyle: Int
-) : LinearLayout(context), Utils {
+) : BaseTimeTable(context) {
     init {
         setting(
             context,
-            originId,
-            scheduleName,
-            roomInfo,
-            scheduleDay,
-            startMinute,
-            endMinute,
-            backgroundColor,
-            textColor,
+            entity,
             height,
             width,
             scheduleClickListener,
-            mOnClickListener,
             tableStartTime,
             radiusStyle
         )
@@ -49,35 +31,28 @@ class ScheduleView(context: Context,
 
     @SuppressLint("RtlHardcoded")
     private fun setting(context: Context,
-                        originId: Int,
-                        scheduleName: String,
-                        roomInfo: String,
-                        scheduleDay: Int,
-                        startMinute: Int,
-                        endMinute: Int,
-                        backgroundColor: String,
-                        textColor: String,
+                        entity: ScheduleEntity,
                         height: Int,
                         width: Int,
-                        scheduleClickListener: ScheduleEntity.OnScheduleClickListener?,
-                        mOnClickListener: OnClickListener?,
+                        scheduleClickListener: OnScheduleClickListener?,
                         tableStartTime: Int,
                         radiusStyle: Int
     ) {
+
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.item_schedule, this, true)
 
-        val duration = endMinute - startMinute
+        val duration = getTotalMinute(entity.endTime) - getTotalMinute(entity.startTime)
 
         val layoutSetting = LayoutParams(width, ((height * duration).toDouble() / 60).toInt())
-        layoutSetting.topMargin = (((height * startMinute).toDouble() / 60) - (height * tableStartTime)).toInt()
-        layoutSetting.leftMargin = width * scheduleDay
+        layoutSetting.topMargin = (((height * getTotalMinute(entity.startTime)).toDouble() / 60) - (height * tableStartTime)).toInt()
+        layoutSetting.leftMargin = width * entity.scheduleDay
 
         tableItem.layoutParams = layoutSetting
 
         tableItem.setOnClickListener {
-            scheduleClickListener?.scheduleClicked(originId)
-            mOnClickListener?.onClick(tableItem)
+            scheduleClickListener?.scheduleClicked(entity)
+            entity.mOnClickListener?.onClick(tableItem)
         }
 
 
@@ -87,8 +62,7 @@ class ScheduleView(context: Context,
         val roundRadius = dpToPx(context, ROUND.toFloat())
 
         val border = GradientDrawable()
-        border.setColor(Color.parseColor(backgroundColor))
-        Log.d("color", backgroundColor)
+        border.setColor(Color.parseColor(entity.backgroundColor))
         border.shape = GradientDrawable.RECTANGLE
 
         when (radiusStyle) {
@@ -115,11 +89,11 @@ class ScheduleView(context: Context,
 
         tableItem.background = border
 
-        name.text = scheduleName
-        room.text = roomInfo
+        name.text = entity.scheduleName
+        room.text = entity.roomInfo
 
-        name.setTextColor(Color.parseColor(textColor))
-        room.setTextColor(Color.parseColor(textColor))
+        name.setTextColor(Color.parseColor(entity.textColor))
+        room.setTextColor(Color.parseColor(entity.textColor))
     }
 
     companion object {

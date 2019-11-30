@@ -2,12 +2,25 @@ package com.islandparadise14.mintable
 
 import android.content.Context
 import android.graphics.Point
+import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.Display
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.LinearLayout
 
-interface Utils {
+open class BaseTimeTable : LinearLayout {
+
+    constructor(context: Context) : super(context)
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
+
     fun getHour (time: String): Int{
         val result = time.split(":")
         return result[0].toInt()
