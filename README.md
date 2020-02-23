@@ -11,7 +11,7 @@ If you only add a course, **the course time is automatically calculated** and ad
 Timetable Library for Android Development   
 Author : Mint Park / Seoul, South Korea   
 Email : nasamk3@gmail.com   
-Newest Version : 1.3.3 (JitPack)  
+Newest Version : 1.3.4 (JitPack)  
   
 ![Platform](https://img.shields.io/badge/Platform-Android-orange.svg)
 ![API](https://img.shields.io/badge/API-19%2B-green.svg)

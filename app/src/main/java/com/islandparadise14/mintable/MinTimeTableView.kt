@@ -107,7 +107,7 @@ class MinTimeTableView : BaseTimeTable {
     }
 
     fun ratioCellSetting(topMenuHeight: Int, leftMenuWidth: Int, cellRatio: Float) {
-        this.topMenuHeight = if (border) topMenuHeight+1 else topMenuHeight
+        this.topMenuHeight = topMenuHeight
         this.leftMenuWidth = leftMenuWidth
         this.cellRatio = cellRatio
         isRatio = true
@@ -151,7 +151,7 @@ class MinTimeTableView : BaseTimeTable {
             if (xEndLine) topMenu.addView(
                     XxisView(
                         tableContext,
-                        topMenuHeightPx.roundToInt(),
+                        if (border) (topMenuHeightPx + 1).roundToInt() else topMenuHeightPx.roundToInt(),
                         averageWidth,
                         dayList[i],
                         menuColor
