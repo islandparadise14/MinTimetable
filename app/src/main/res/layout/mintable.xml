@@ -7,61 +7,69 @@
     android:id="@+id/timetable"
     android:orientation="horizontal">
 
-
     <LinearLayout
-        android:id="@+id/leftMenu"
-        android:layout_width="30dp"
-        android:layout_height="600dp"
+        android:id="@+id/borderBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="#dddddd"
-        android:orientation="vertical">
-
+        tools:layout_width="match_parent">
 
         <LinearLayout
-            android:id="@+id/zeroPoint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/leftMenu"
+            android:layout_width="30dp"
+            android:layout_height="600dp"
+            android:background="#dddddd"
             android:orientation="vertical">
 
+
+            <LinearLayout
+                android:id="@+id/zeroPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/timeCell"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/timeCell"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
+            <LinearLayout
+                android:id="@+id/topMenu"
+                android:layout_width="match_parent"
+                android:background="#dddddd"
+                android:layout_height="30dp"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/mainTable"
+                android:layout_width="match_parent"
+                android:background="#dddddd"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    tools:text="TimetableView"/>
+
+            </FrameLayout>
+
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-        <LinearLayout
-            android:id="@+id/topMenu"
-            android:layout_width="match_parent"
-            android:background="#dddddd"
-            android:layout_height="30dp"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/mainTable"
-            android:layout_width="match_parent"
-            android:background="#dddddd"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                tools:text="TimetableView"/>
-
-        </FrameLayout>
 
     </LinearLayout>
 </LinearLayout>

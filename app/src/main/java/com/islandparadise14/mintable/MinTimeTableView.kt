@@ -143,8 +143,8 @@ class MinTimeTableView : BaseTimeTable {
         topMenu.layoutParams =  LayoutParams(LayoutParams.WRAP_CONTENT, topMenuHeightPx.roundToInt())
         mainTable.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         if (border) {
-            timetable.setBackgroundColor(lineColor)
-            timetable.setPadding(1,1,0,0)
+            borderBox.setBackgroundColor(lineColor)
+            borderBox.setPadding(dpToPx(tableContext,1f).roundToInt(),dpToPx(tableContext,1f).roundToInt(),0,0)
             averageWidth -= 1
         }
         removeViews(arrayOf(zeroPoint, topMenu, timeCell, mainTable))
