@@ -72,8 +72,8 @@ val schedule = ScheduleEntity(
                   "Database", //scheduleName
                   "IT Building 301", //roomInfo
                   ScheduleDay.TUESDAY, //ScheduleDay object (MONDAY ~ SUNDAY)
-                  "8:20", //startTime
-                  "10:30", //endTime
+                  "8:20", //startTime format: "HH:mm"
+                  "10:30", //endTime  format: "HH:mm"
                   "#73fcae68", //backgroundColor (optional)
                   "#000000" //textcolor (optional)
                 )
@@ -126,15 +126,27 @@ schedule.setOnClickListener(View.OnClickListener {
     //do something
 })
 ```
-if you need originId in Listener, you can use OnScheduleClickListener
+  
+#### MinTimeTableView has two kinds of Listener   
+When you click on a schedule,   
+if you need ScheduleEntity in Listener, you can use OnScheduleClickListener
 ```kotlin
-schedule.setOnScheduleClickListener(
-    object :ScheduleEntity.OnScheduleClickListener {
-        override fun scheduleClicked(originId: Int) {
+table.setOnScheduleClickListener(
+    object :OnScheduleClickListener {
+        override fun scheduleClicked(entity: ScheduleEntity) {
             //do something
         }
     }
 )
+```  
+When you click on a timeCell,   
+if you need weekdayInfo and timeInfo, you can use OnTimeCellClickListener
+```kotlin
+table.setOnTimeCellClickListener(object :OnTimeCellClickListener{
+    override fun timeCellClicked(scheduleDay: Int, time: Int) {
+        //do something
+    }
+})
 ```
 
 ### Length options
