@@ -132,8 +132,8 @@ class MinTimeTableView : BaseTimeTable {
         }
 
         if (border) {
-            leftMenu.setPadding(1, 0, 0, 0)
-            topMenu.setPadding(0, 1, 0, 0)
+            leftMenu.setPadding(dpToPx(tableContext, 1f).roundToInt(), 0, 0, 0)
+            topMenu.setPadding(0, dpToPx(tableContext, 1f).roundToInt(), 0, 0)
         }
 
         cellHeightPx = if (isRatio) averageWidth * cellRatio
@@ -148,16 +148,25 @@ class MinTimeTableView : BaseTimeTable {
         zeroPoint.addView(ZeroPointView(tableContext, topMenuHeightPx.roundToInt(), leftMenuWidthPx.roundToInt(), menuColor))
 
         for(i in 0 until (this.dayList).size) {
-            if (xEndLine) {
-                if (i == (this.dayList).size - 1) topMenu.addView(
-                    XxisEndView(
+            if (xEndLine) topMenu.addView(
+                    XxisView(
                         tableContext,
                         topMenuHeightPx.roundToInt(),
                         averageWidth,
-                        (this.dayList)[(this.dayList).size - 1],
+                        dayList[i],
                         menuColor
                     )
                 )
+            else {
+                if (i == (this.dayList).size - 1) topMenu . addView (
+                        XxisEndView(
+                            tableContext,
+                            topMenuHeightPx.roundToInt(),
+                            averageWidth,
+                            (this.dayList)[(this.dayList).size - 1],
+                            menuColor
+                        )
+                        )
                 else topMenu.addView(
                     XxisView(
                         tableContext,
@@ -168,15 +177,6 @@ class MinTimeTableView : BaseTimeTable {
                     )
                 )
             }
-            else topMenu.addView(
-                XxisView(
-                    tableContext,
-                    topMenuHeightPx.roundToInt(),
-                    averageWidth,
-                    dayList[i],
-                    menuColor
-                )
-            )
         }
 
         recycleTimeCell()
@@ -241,6 +241,17 @@ class MinTimeTableView : BaseTimeTable {
                 else (tableStartTime + i)
             }
             if (yEndLine) {
+                timeCell.addView(
+                    YxisView(
+                        tableContext,
+                        cellHeightPx.roundToInt(),
+                        leftMenuWidthPx.roundToInt(),
+                        hour.toString(),
+                        menuColor
+                    )
+                )
+            }
+            else {
                 if (i == (tableEndTime - tableStartTime) - 1) timeCell.addView(
                     YxisEndView(
                         tableContext,
@@ -260,15 +271,6 @@ class MinTimeTableView : BaseTimeTable {
                     )
                 )
             }
-            else timeCell.addView(
-                YxisView(
-                    tableContext,
-                    cellHeightPx.roundToInt(),
-                    leftMenuWidthPx.roundToInt(),
-                    hour.toString(),
-                    menuColor
-                )
-            )
 
         }
     }
