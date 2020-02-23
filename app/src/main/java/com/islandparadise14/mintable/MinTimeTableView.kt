@@ -132,8 +132,8 @@ class MinTimeTableView : BaseTimeTable {
         }
 
         if (border) {
-            leftMenu.setPadding(dpToPx(tableContext, 1f).roundToInt(), 0, 0, 0)
-            topMenu.setPadding(0, dpToPx(tableContext, 1f).roundToInt(), 0, 0)
+            leftMenu.setPadding(dpToPx(tableContext, 1f).roundToInt(), dpToPx(tableContext, 1f).roundToInt(), dpToPx(tableContext, 1f).roundToInt(), 0)
+            topMenu.setPadding(0, dpToPx(tableContext, 1f).roundToInt(), 0, dpToPx(tableContext, 1f).roundToInt())
         }
 
         cellHeightPx = if (isRatio) averageWidth * cellRatio
