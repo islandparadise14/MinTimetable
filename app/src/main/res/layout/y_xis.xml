@@ -11,6 +11,7 @@
         android:background="#fafafa"
         android:gravity="right"
         android:textColor="#222222"
+        android:textSize="12sp"
         android:layout_marginRight="1dp"
         android:layout_marginBottom="1dp"
         android:paddingRight="3dp"

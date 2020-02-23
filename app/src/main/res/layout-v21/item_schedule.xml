@@ -12,7 +12,7 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
+        android:textSize="10sp"
         android:textStyle="bold"
         tools:text="데이터 베이스" />
 
@@ -20,7 +20,7 @@
         android:id="@+id/room"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
+        android:textSize="6sp"
         android:textStyle="bold"
         tools:text="정보과학관 311호" />
 </LinearLayout>
