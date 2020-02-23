@@ -127,7 +127,7 @@ schedule.setOnClickListener(View.OnClickListener {
 })
 ```
   
-#### MinTimeTableView has two kinds of Listener   
+#### MinTimeTableView has three kinds of Listener   
 When you click on a schedule,   
 if you need ScheduleEntity in Listener, you can use OnScheduleClickListener
 ```kotlin
@@ -147,6 +147,18 @@ table.setOnTimeCellClickListener(object :OnTimeCellClickListener{
         //do something
     }
 })
+```
+
+When you LongClick on a schedule,
+if you need ScheduleEntity in Listener, you can use OnScheduleLongClickListener
+```kotlin
+table.setOnScheduleLongClickListener(
+        object :OnScheduleLongClickListener{
+            override fun scheduleLongClicked(entity: ScheduleEntity) {
+                //do something
+            }
+        }
+)
 ```
 
 ### Length options
