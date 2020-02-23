@@ -14,6 +14,7 @@ class ScheduleView(context: Context,
                    height: Int,
                    width: Int,
                    scheduleClickListener: OnScheduleClickListener?,
+                   scheduleLongClickListener: OnScheduleLongClickListener?,
                    tableStartTime: Int,
                    radiusStyle: Int
 ) : BaseTimeTable(context) {
@@ -24,6 +25,7 @@ class ScheduleView(context: Context,
             height,
             width,
             scheduleClickListener,
+            scheduleLongClickListener,
             tableStartTime,
             radiusStyle
         )
@@ -35,6 +37,7 @@ class ScheduleView(context: Context,
                         height: Int,
                         width: Int,
                         scheduleClickListener: OnScheduleClickListener?,
+                        scheduleLongClickListener: OnScheduleLongClickListener?,
                         tableStartTime: Int,
                         radiusStyle: Int
     ) {
@@ -53,6 +56,11 @@ class ScheduleView(context: Context,
         tableItem.setOnClickListener {
             scheduleClickListener?.scheduleClicked(entity)
             entity.mOnClickListener?.onClick(tableItem)
+        }
+
+        tableItem.setOnLongClickListener {
+            scheduleLongClickListener?.scheduleLongClicked(entity)
+            return@setOnLongClickListener true
         }
 
 

@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:background="#fafafa"
         android:gravity="center"
-        android:textColor="#000000"
+        android:textColor="#222222"
         android:layout_marginBottom="1dp"
         android:paddingRight="1dp"
         android:text="금" />

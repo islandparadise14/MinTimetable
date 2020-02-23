@@ -40,6 +40,7 @@ class MinTimeTableView : BaseTimeTable {
 
     private var scheduleClickListener: OnScheduleClickListener? = null
     private var timeCellClickListener: OnTimeCellClickListener? = null
+    private var scheduleLongClickListener: OnScheduleLongClickListener? = null
 
     private var border: Boolean = false
     private var xEndLine: Boolean = false
@@ -203,6 +204,7 @@ class MinTimeTableView : BaseTimeTable {
                         cellHeightPx.roundToInt(),
                         averageWidth,
                         scheduleClickListener,
+                        scheduleLongClickListener,
                         tableStartTime,
                         radiusStyle
                     )
@@ -213,6 +215,10 @@ class MinTimeTableView : BaseTimeTable {
 
     fun setOnScheduleClickListener(listener: OnScheduleClickListener) {
         scheduleClickListener = listener
+    }
+
+    fun setOnscheduleLongClickListener(listener: OnScheduleLongClickListener) {
+        scheduleLongClickListener = listener
     }
 
     fun setOnTimeCellClickListener(listener: OnTimeCellClickListener) {
