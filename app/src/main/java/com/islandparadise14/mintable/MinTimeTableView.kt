@@ -107,7 +107,7 @@ class MinTimeTableView : BaseTimeTable {
     }
 
     fun ratioCellSetting(topMenuHeight: Int, leftMenuWidth: Int, cellRatio: Float) {
-        this.topMenuHeight = topMenuHeight
+        this.topMenuHeight = if (border) topMenuHeight+1 else topMenuHeight
         this.leftMenuWidth = leftMenuWidth
         this.cellRatio = cellRatio
         isRatio = true
