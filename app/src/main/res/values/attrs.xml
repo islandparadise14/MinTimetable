@@ -13,5 +13,8 @@
         <attr name="setTwentyFourHourClock" format="boolean"/>
         <attr name="isFullWidth" format="boolean"/>
         <attr name="widthPadding" format="integer"/>
+        <attr name="xEndLine" format="boolean"/>
+        <attr name="yEndLine" format="boolean"/>
+        <attr name="border" format="boolean"/>
     </declare-styleable>
 </resources>
