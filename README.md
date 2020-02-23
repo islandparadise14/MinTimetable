@@ -199,3 +199,21 @@ add attribute 'setTwentyFourHourClock' (default: true)
 ```
 
 ![screenshot](./screenshot_7.png)
+
+
+### Border Option
+<img src="./screenshot_8.png" width="30%">
+add attribute 'xEndLine'(blue), 'yEndLine'(red), 'border'(green) 
+
+(default: false)
+
+```xml
+<com.islandparadise14.mintable.MinTimeTableView
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:border="true"
+                app:xEndLine="true"
+                app:yEndLine="true" />
+```
+
