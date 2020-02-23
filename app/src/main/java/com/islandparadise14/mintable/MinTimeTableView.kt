@@ -217,7 +217,7 @@ class MinTimeTableView : BaseTimeTable {
         scheduleClickListener = listener
     }
 
-    fun setOnscheduleLongClickListener(listener: OnScheduleLongClickListener) {
+    fun setOnScheduleLongClickListener(listener: OnScheduleLongClickListener) {
         scheduleLongClickListener = listener
     }
 
