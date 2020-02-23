@@ -2,6 +2,7 @@ package com.islandparadise14.mintable
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.mintable.view.*
@@ -81,7 +82,11 @@ class MinTimeTableView : BaseTimeTable {
         twentyFourHourClock = array.getBoolean(R.styleable.MinTimeTableView_setTwentyFourHourClock, true)
         cellColor = array.getColor(R.styleable.MinTimeTableView_cellColor, 0)
         menuColor = array.getColor(R.styleable.MinTimeTableView_menuColor, 0)
-        lineColor = array.getColor(R.styleable.MinTimeTableView_lineColor, 0)
+        lineColor = array.getColor(R.styleable.MinTimeTableView_lineColor,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                resources.getColor(R.color.default_line, null)
+            else
+                resources.getColor(R.color.default_line))
 
         border = array.getBoolean(R.styleable.MinTimeTableView_border, false)
         xEndLine = array.getBoolean(R.styleable.MinTimeTableView_xEndLine, false)
@@ -131,18 +136,17 @@ class MinTimeTableView : BaseTimeTable {
             timetable.setPadding(widthPaddingPx.roundToInt(), 0, widthPaddingPx.roundToInt(), 0)
         }
 
-        if (border) {
-            leftMenu.setPadding(dpToPx(tableContext, 1f).roundToInt(), dpToPx(tableContext, 1f).roundToInt(), dpToPx(tableContext, 1f).roundToInt(), 0)
-            topMenu.setPadding(0, dpToPx(tableContext, 1f).roundToInt(), 0, dpToPx(tableContext, 1f).roundToInt())
-        }
-
         cellHeightPx = if (isRatio) averageWidth * cellRatio
         else dpToPx(tableContext, cellHeight.toFloat())
 
         leftMenu.layoutParams = LayoutParams(leftMenuWidthPx.roundToInt(), LayoutParams.WRAP_CONTENT)
         topMenu.layoutParams =  LayoutParams(LayoutParams.WRAP_CONTENT, topMenuHeightPx.roundToInt())
         mainTable.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-
+        if (border) {
+            timetable.setBackgroundColor(lineColor)
+            timetable.setPadding(1,1,0,0)
+            averageWidth -= 1
+        }
         removeViews(arrayOf(zeroPoint, topMenu, timeCell, mainTable))
 
         zeroPoint.addView(ZeroPointView(tableContext, topMenuHeightPx.roundToInt(), leftMenuWidthPx.roundToInt(), menuColor))
@@ -151,7 +155,7 @@ class MinTimeTableView : BaseTimeTable {
             if (xEndLine) topMenu.addView(
                     XxisView(
                         tableContext,
-                        if (border) (topMenuHeightPx + 1).roundToInt() else topMenuHeightPx.roundToInt(),
+                        topMenuHeightPx.roundToInt(),
                         averageWidth,
                         dayList[i],
                         menuColor
