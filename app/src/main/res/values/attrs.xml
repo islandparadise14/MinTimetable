@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="MinTimeTableView">
-        <attr name="radius_option">
+        <attr name="radiusOption">
             <enum name="none" value="0"/>
             <enum name="left" value="1"/>
             <enum name="right" value="2"/>
