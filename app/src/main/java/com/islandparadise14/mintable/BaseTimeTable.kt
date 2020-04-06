@@ -32,8 +32,8 @@ open class BaseTimeTable : LinearLayout {
     protected var dayList: Array<String> = arrayOf()
 
     protected var radiusStyle: Int = 0
-    private var twentyFourHourClock = true
-    private var cellColor = 0
+    protected var isTwentyFourHourClock = true
+    protected var cellColor = 0
     protected var menuColor = 0
     protected var lineColor = 0
 
@@ -46,7 +46,9 @@ open class BaseTimeTable : LinearLayout {
 
     protected var border: Boolean = false
     protected var xEndLine: Boolean = false
-    private var yEndLine: Boolean = false
+    protected var yEndLine: Boolean = false
+
+    protected var schedules: ArrayList<ScheduleEntity> = ArrayList()
 
 
     constructor(context: Context) : super(context){
@@ -82,7 +84,7 @@ open class BaseTimeTable : LinearLayout {
         val array = tableContext.obtainStyledAttributes(attrs, R.styleable.MinTimeTableView)
 
         radiusStyle = array.getInt(R.styleable.MinTimeTableView_radiusOption, 0)
-        twentyFourHourClock = array.getBoolean(R.styleable.MinTimeTableView_setTwentyFourHourClock, true)
+        isTwentyFourHourClock = array.getBoolean(R.styleable.MinTimeTableView_isTwentyFourHourClock, true)
         cellColor = array.getColor(R.styleable.MinTimeTableView_cellColor, 0)
         menuColor = array.getColor(R.styleable.MinTimeTableView_menuColor, 0)
         lineColor = array.getColor(R.styleable.MinTimeTableView_lineColor,
@@ -126,7 +128,7 @@ open class BaseTimeTable : LinearLayout {
             dayList.forEach { day -> val j: Int = dayList.indexOf(day)
                 mainTable.addView(TableCellView(tableContext, cellHeightPx.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx.roundToInt()), cellColor, timeCellClickListener, j, (tableStartTime + i)))
             }
-            val hour = if (twentyFourHourClock) (tableStartTime + i)
+            val hour = if (isTwentyFourHourClock) (tableStartTime + i)
             else {
                 if ((tableStartTime + i)!=12) (tableStartTime + i) % 12
                 else (tableStartTime + i)

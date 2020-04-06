@@ -15,6 +15,7 @@ class MinTimeTableView : BaseTimeTable {
         defStyleAttr
     )
 
+    //table setting function
 
     fun baseSetting(topMenuHeight: Int, leftMenuWidth: Int, cellHeight: Int) {
         super.topMenuHeight = topMenuHeight
@@ -99,15 +100,16 @@ class MinTimeTableView : BaseTimeTable {
     }
 
     fun updateSchedules(schedules: ArrayList<ScheduleEntity>) {
-        if (schedules.size == 0) {
+        super.schedules = schedules
+        if (super.schedules.size == 0) {
             return
         }
-        super.calculateTime(schedules)
+        super.calculateTime(super.schedules)
 
         removeViews(arrayOf(timeCell, mainTable))
         super.recycleTimeCell()
 
-        schedules.map {entity ->
+        super.schedules.map {entity ->
                 mainTable.addView(
                     ScheduleView(
                         super.tableContext,
@@ -134,5 +136,67 @@ class MinTimeTableView : BaseTimeTable {
 
     fun setOnTimeCellClickListener(listener: OnTimeCellClickListener) {
         super.timeCellClickListener = listener
+    }
+
+
+    //attrs setting function
+
+    fun radiusOption(option: Int) {
+        super.radiusStyle = option
+        updateSchedules(super.schedules)
+    }
+
+    fun cellColor(color: Int) {
+        super.cellColor = color
+        initTable(super.dayList)
+        updateSchedules(super.schedules)
+    }
+
+    fun menuColor(color: Int) {
+        super.menuColor = color
+        initTable(super.dayList)
+        updateSchedules(super.schedules)
+    }
+
+    fun lineColor(color: Int) {
+        super.lineColor = color
+        initTable(super.dayList)
+        updateSchedules(super.schedules)
+    }
+
+    fun isTwentyFourHourClock(boolean: Boolean) {
+        super.isTwentyFourHourClock = boolean
+        initTable(super.dayList)
+        updateSchedules(super.schedules)
+    }
+
+    fun isFullWidth(boolean: Boolean) {
+        super.isFullScreen = boolean
+        initTable(super.dayList)
+        updateSchedules(super.schedules)
+    }
+
+    fun widthPadding(dp: Int) {
+        super.widthPadding = dp
+        initTable(super.dayList)
+        updateSchedules(super.schedules)
+    }
+
+    fun xEndLine(boolean: Boolean) {
+        super.xEndLine = boolean
+        initTable(super.dayList)
+        updateSchedules(super.schedules)
+    }
+
+    fun yEndLine(boolean: Boolean) {
+        super.yEndLine = boolean
+        initTable(super.dayList)
+        updateSchedules(super.schedules)
+    }
+
+    fun border(boolean: Boolean) {
+        super.border = boolean
+        initTable(super.dayList)
+        updateSchedules(super.schedules)
     }
 }
