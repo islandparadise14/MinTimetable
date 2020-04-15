@@ -11,7 +11,7 @@ If you only add a course, **the course time is automatically calculated** and ad
 Timetable Library for Android Development   
 Author : Mint Park / Seoul, South Korea   
 Email : nasamk3@gmail.com   
-Newest Version : 1.4.2 (JitPack)  
+Newest Version : 1.5.0 (JitPack)  
   
 ![Platform](https://img.shields.io/badge/Platform-Android-orange.svg)
 ![API](https://img.shields.io/badge/API-19%2B-green.svg)
@@ -175,13 +175,13 @@ table.ratioCellSetting(20, 30, 1.5f)
 ```
 
 ### Border Option
-add attribute 'radius_option' ( none | left | right | round )
+add attribute 'radiusOption' ( none | left | right | round )
 ```xml
 <com.islandparadise14.mintable.MinTimeTableView
                 android:id="@+id/table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:radius_option="left" />
+                app:radiusOption="left" />
 ```
 
 ![screenshot](./screenshot_5.png) 
@@ -201,13 +201,13 @@ add attribute 'cellColor', 'lineColor', 'menuColor'
 <img src="./screenshot_6.png" width="30%">
 
 ### TwentyFourHourClock option
-add attribute 'setTwentyFourHourClock' (default: true)
+add attribute 'isTwentyFourHourClock' (default: true)
 ```xml
 <com.islandparadise14.mintable.MinTimeTableView
                 android:id="@+id/table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:setTwentyFourHourClock="false" />
+                app:isTwentyFourHourClock="false" />
 ```
 
 ![screenshot](./screenshot_7.png)
@@ -229,3 +229,5 @@ add attribute 'xEndLine'(blue), 'yEndLine'(red), 'border'(green)
                 app:yEndLine="true" />
 ```
 
+### Menu Text Color,Size Option
+add attribute 'menuTextSize'(float) 'menuTextColor'(color)
