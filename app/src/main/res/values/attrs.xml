@@ -16,5 +16,7 @@
         <attr name="xEndLine" format="boolean"/>
         <attr name="yEndLine" format="boolean"/>
         <attr name="border" format="boolean"/>
+        <attr name="menuTextSize" format="float"/>
+        <attr name="menuTextColor" format="reference|color"/>
     </declare-styleable>
 </resources>

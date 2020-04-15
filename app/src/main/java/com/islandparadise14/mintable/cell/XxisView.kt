@@ -8,12 +8,12 @@ import com.islandparadise14.mintable.R
 import kotlinx.android.synthetic.main.x_xis.view.*
 
 @SuppressLint("ViewConstructor")
-class XxisView(context: Context, height: Int, width: Int, text: String, menuColor: Int) : LinearLayout(context) {
+class XxisView(context: Context, height: Int, width: Int, text: String, menuColor: Int, menuTextColor: Int, menuTextSize: Float) : LinearLayout(context) {
     init {
-        initView(context, height, width, text, menuColor)
+        initView(context, height, width, text, menuColor, menuTextColor, menuTextSize)
     }
 
-    private fun initView(context: Context, height: Int, width: Int, text: String, menuColor: Int){
+    private fun initView(context: Context, height: Int, width: Int, text: String, menuColor: Int, menuTextColor: Int, menuTextSize: Float){
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.x_xis, this, true)
 

@@ -108,14 +108,16 @@ class MinTimeTableView : BaseTimeTable {
             )
         )
 
-        for(i in 0 until (super.dayList).size) {
+        for(i in (super.dayList).indices) {
             if (super.xEndLine) topMenu.addView(
                 XxisView(
                     super.tableContext,
                     super.topMenuHeightPx.roundToInt(),
                     super.averageWidth,
                     dayList[i],
-                    super.menuColor
+                    super.menuColor,
+                    super.menuTextColor,
+                    super.menuTextSize
                 )
                 )
             else {
@@ -125,7 +127,9 @@ class MinTimeTableView : BaseTimeTable {
                         super.topMenuHeightPx.roundToInt(),
                         super.averageWidth,
                         (super.dayList)[(super.dayList).size - 1],
-                        super.menuColor
+                        super.menuColor,
+                        super.menuTextColor,
+                        dpToPx(tableContext, super.menuTextSize)
                     )
                         )
                 else topMenu.addView(
@@ -134,7 +138,9 @@ class MinTimeTableView : BaseTimeTable {
                         super.topMenuHeightPx.roundToInt(),
                         super.averageWidth,
                         dayList[i],
-                        super.menuColor
+                        super.menuColor,
+                        super.menuTextColor,
+                        dpToPx(tableContext, super.menuTextSize)
                     )
                 )
             }

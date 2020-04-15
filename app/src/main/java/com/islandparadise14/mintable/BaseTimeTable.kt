@@ -13,6 +13,7 @@ import com.islandparadise14.mintable.model.ScheduleEntity
 import com.islandparadise14.mintable.tableinterface.OnScheduleClickListener
 import com.islandparadise14.mintable.tableinterface.OnScheduleLongClickListener
 import com.islandparadise14.mintable.tableinterface.OnTimeCellClickListener
+import com.islandparadise14.mintable.utils.dpToPx
 import com.islandparadise14.mintable.utils.getHour
 import kotlinx.android.synthetic.main.mintable.view.*
 import kotlin.math.roundToInt
@@ -44,6 +45,8 @@ open class BaseTimeTable : LinearLayout {
     protected var cellColor = 0
     protected var menuColor = 0
     protected var lineColor = 0
+    protected var menuTextColor = 0
+    protected var menuTextSize = 0f
 
     protected var isFullScreen = false
     protected var widthPadding = 0
@@ -78,7 +81,7 @@ open class BaseTimeTable : LinearLayout {
 
 
     @SuppressLint("Recycle", "CustomViewStyleable")
-    fun initView(context: Context, attrs: AttributeSet?) {
+    private fun initView(context: Context, attrs: AttributeSet?) {
         tableContext = context
         val inflater = LayoutInflater.from(tableContext)
         val v = inflater.inflate(R.layout.mintable, this, false)
@@ -113,6 +116,9 @@ open class BaseTimeTable : LinearLayout {
 
         isFullScreen = array.getBoolean(R.styleable.MinTimeTableView_isFullWidth, false)
         widthPadding = array.getInteger(R.styleable.MinTimeTableView_widthPadding, 0)
+
+        menuTextColor = array.getColor(R.styleable.MinTimeTableView_menuTextColor, 0)
+        menuTextSize = array.getFloat(R.styleable.MinTimeTableView_menuTextSize, 0f)
 
         array.recycle()
     }
@@ -162,7 +168,9 @@ open class BaseTimeTable : LinearLayout {
                         cellHeightPx.roundToInt(),
                         leftMenuWidthPx.roundToInt(),
                         hour.toString(),
-                        menuColor
+                        menuColor,
+                        menuTextColor,
+                        menuTextSize
                     )
                 )
             }
@@ -173,7 +181,9 @@ open class BaseTimeTable : LinearLayout {
                         cellHeightPx.roundToInt(),
                         leftMenuWidthPx.roundToInt(),
                         hour.toString(),
-                        menuColor
+                        menuColor,
+                        menuTextColor,
+                        dpToPx(tableContext, menuTextSize)
                     )
                 )
                 else timeCell.addView(
@@ -182,7 +192,9 @@ open class BaseTimeTable : LinearLayout {
                         cellHeightPx.roundToInt(),
                         leftMenuWidthPx.roundToInt(),
                         hour.toString(),
-                        menuColor
+                        menuColor,
+                        menuTextColor,
+                        dpToPx(tableContext, menuTextSize)
                     )
                 )
             }
