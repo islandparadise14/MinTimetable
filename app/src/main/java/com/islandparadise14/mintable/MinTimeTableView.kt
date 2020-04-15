@@ -2,6 +2,16 @@ package com.islandparadise14.mintable
 
 import android.content.Context
 import android.util.AttributeSet
+import com.islandparadise14.mintable.cell.XxisEndView
+import com.islandparadise14.mintable.cell.XxisView
+import com.islandparadise14.mintable.cell.ZeroPointView
+import com.islandparadise14.mintable.model.ScheduleEntity
+import com.islandparadise14.mintable.schedule.ScheduleView
+import com.islandparadise14.mintable.tableinterface.OnScheduleClickListener
+import com.islandparadise14.mintable.tableinterface.OnScheduleLongClickListener
+import com.islandparadise14.mintable.tableinterface.OnTimeCellClickListener
+import com.islandparadise14.mintable.utils.dpToPx
+import com.islandparadise14.mintable.utils.getWindowWidth
 import kotlinx.android.synthetic.main.mintable.view.*
 import kotlin.math.roundToInt
 
@@ -36,9 +46,18 @@ class MinTimeTableView : BaseTimeTable {
         super.tableEndTime = 16
         super.dayList = dayList
 
-        super.topMenuHeightPx = dpToPx(super.tableContext, super.topMenuHeight.toFloat())
-        super.leftMenuWidthPx = dpToPx(super.tableContext, super.leftMenuWidth.toFloat())
-        super.widthPaddingPx = dpToPx(super.tableContext, super.widthPadding.toFloat())
+        super.topMenuHeightPx = dpToPx(
+            super.tableContext,
+            super.topMenuHeight.toFloat()
+        )
+        super.leftMenuWidthPx = dpToPx(
+            super.tableContext,
+            super.leftMenuWidth.toFloat()
+        )
+        super.widthPaddingPx = dpToPx(
+            super.tableContext,
+            super.widthPadding.toFloat()
+        )
 
         super.averageWidth = if (super.isFullScreen)
             (getWindowWidth(super.tableContext) - (super.widthPaddingPx.roundToInt() * 2) - super.leftMenuWidthPx.roundToInt()) / (super.dayList).size
@@ -50,39 +69,64 @@ class MinTimeTableView : BaseTimeTable {
         }
 
         super.cellHeightPx = if (super.isRatio) super.averageWidth * super.cellRatio
-        else dpToPx(super.tableContext, super.cellHeight.toFloat())
+        else dpToPx(
+            super.tableContext,
+            super.cellHeight.toFloat()
+        )
 
         leftMenu.layoutParams = LayoutParams(super.leftMenuWidthPx.roundToInt(), LayoutParams.WRAP_CONTENT)
         topMenu.layoutParams =  LayoutParams(LayoutParams.WRAP_CONTENT, super.topMenuHeightPx.roundToInt())
         mainTable.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         if (super.border) {
             borderBox.setBackgroundColor(super.lineColor)
-            borderBox.setPadding(dpToPx(super.tableContext,1f).roundToInt(),dpToPx(super.tableContext,1f).roundToInt(),0,0)
+            borderBox.setPadding(
+                dpToPx(
+                    super.tableContext,
+                    1f
+                ).roundToInt(),
+                dpToPx(
+                    super.tableContext,
+                    1f
+                ).roundToInt(),0,0)
             averageWidth -= 1
         }
-        removeViews(arrayOf(zeroPoint, topMenu, timeCell, mainTable))
+        com.islandparadise14.mintable.utils.removeViews(
+            arrayOf(
+                zeroPoint,
+                topMenu,
+                timeCell,
+                mainTable
+            )
+        )
 
-        zeroPoint.addView(ZeroPointView(super.tableContext, super.topMenuHeightPx.roundToInt(), super.leftMenuWidthPx.roundToInt(), super.menuColor))
+        zeroPoint.addView(
+            ZeroPointView(
+                super.tableContext,
+                super.topMenuHeightPx.roundToInt(),
+                super.leftMenuWidthPx.roundToInt(),
+                super.menuColor
+            )
+        )
 
         for(i in 0 until (super.dayList).size) {
             if (super.xEndLine) topMenu.addView(
-                    XxisView(
-                        super.tableContext,
-                        super.topMenuHeightPx.roundToInt(),
-                        super.averageWidth,
-                        dayList[i],
-                        super.menuColor
-                    )
+                XxisView(
+                    super.tableContext,
+                    super.topMenuHeightPx.roundToInt(),
+                    super.averageWidth,
+                    dayList[i],
+                    super.menuColor
+                )
                 )
             else {
                 if (i == (super.dayList).size - 1) topMenu . addView (
-                        XxisEndView(
-                            super.tableContext,
-                            super.topMenuHeightPx.roundToInt(),
-                            super.averageWidth,
-                            (super.dayList)[(super.dayList).size - 1],
-                            super.menuColor
-                        )
+                    XxisEndView(
+                        super.tableContext,
+                        super.topMenuHeightPx.roundToInt(),
+                        super.averageWidth,
+                        (super.dayList)[(super.dayList).size - 1],
+                        super.menuColor
+                    )
                         )
                 else topMenu.addView(
                     XxisView(
@@ -106,7 +150,12 @@ class MinTimeTableView : BaseTimeTable {
         }
         super.calculateTime(super.schedules)
 
-        removeViews(arrayOf(timeCell, mainTable))
+        com.islandparadise14.mintable.utils.removeViews(
+            arrayOf(
+                timeCell,
+                mainTable
+            )
+        )
         super.recycleTimeCell()
 
         super.schedules.map {entity ->

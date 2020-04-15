@@ -1,4 +1,4 @@
-package com.islandparadise14.mintable
+package com.islandparadise14.mintable.utils
 
 import android.content.Context
 import android.graphics.Point

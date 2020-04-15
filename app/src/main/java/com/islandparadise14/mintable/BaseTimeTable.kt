@@ -6,6 +6,14 @@ import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.islandparadise14.mintable.cell.TableCellView
+import com.islandparadise14.mintable.cell.YxisEndView
+import com.islandparadise14.mintable.cell.YxisView
+import com.islandparadise14.mintable.model.ScheduleEntity
+import com.islandparadise14.mintable.tableinterface.OnScheduleClickListener
+import com.islandparadise14.mintable.tableinterface.OnScheduleLongClickListener
+import com.islandparadise14.mintable.tableinterface.OnTimeCellClickListener
+import com.islandparadise14.mintable.utils.getHour
 import kotlinx.android.synthetic.main.mintable.view.*
 import kotlin.math.roundToInt
 
@@ -110,11 +118,13 @@ open class BaseTimeTable : LinearLayout {
     }
 
     protected fun calculateTime (schedules: ArrayList<ScheduleEntity>) {
-        tableStartTime = getHour(schedules[0].startTime)
+        tableStartTime =
+            getHour(schedules[0].startTime)
         tableEndTime = 16
         schedules.map {entity ->
             if(getHour(entity.startTime) < tableStartTime)
-                tableStartTime = getHour(entity.startTime)
+                tableStartTime =
+                    getHour(entity.startTime)
             if(getHour(entity.endTime) >= tableEndTime)
                 tableEndTime = getHour(entity.endTime) + 1
         }
@@ -126,7 +136,19 @@ open class BaseTimeTable : LinearLayout {
     protected fun recycleTimeCell () {
         for(i in 0 until (tableEndTime - tableStartTime)) {
             dayList.forEach { day -> val j: Int = dayList.indexOf(day)
-                mainTable.addView(TableCellView(tableContext, cellHeightPx.roundToInt(), averageWidth, (j * averageWidth), (i * cellHeightPx.roundToInt()), cellColor, timeCellClickListener, j, (tableStartTime + i)))
+                mainTable.addView(
+                    TableCellView(
+                        tableContext,
+                        cellHeightPx.roundToInt(),
+                        averageWidth,
+                        (j * averageWidth),
+                        (i * cellHeightPx.roundToInt()),
+                        cellColor,
+                        timeCellClickListener,
+                        j,
+                        (tableStartTime + i)
+                    )
+                )
             }
             val hour = if (isTwentyFourHourClock) (tableStartTime + i)
             else {

@@ -1,9 +1,11 @@
-package com.islandparadise14.mintable
+package com.islandparadise14.mintable.cell
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.islandparadise14.mintable.R
+import com.islandparadise14.mintable.tableinterface.OnTimeCellClickListener
 import kotlinx.android.synthetic.main.item_table_cell.view.*
 
 @SuppressLint("ViewConstructor")

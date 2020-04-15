@@ -1,4 +1,4 @@
-package com.islandparadise14.mintable
+package com.islandparadise14.mintable.schedule
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,6 +6,13 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
+import com.islandparadise14.mintable.BaseTimeTable
+import com.islandparadise14.mintable.R
+import com.islandparadise14.mintable.model.ScheduleEntity
+import com.islandparadise14.mintable.tableinterface.OnScheduleClickListener
+import com.islandparadise14.mintable.tableinterface.OnScheduleLongClickListener
+import com.islandparadise14.mintable.utils.dpToPx
+import com.islandparadise14.mintable.utils.getTotalMinute
 import kotlinx.android.synthetic.main.item_schedule.view.*
 
 @SuppressLint("ViewConstructor")
@@ -45,10 +52,14 @@ class ScheduleView(context: Context,
         val inflater = LayoutInflater.from(context)
         inflater.inflate(R.layout.item_schedule, this, true)
 
-        val duration = getTotalMinute(entity.endTime) - getTotalMinute(entity.startTime)
+        val duration = getTotalMinute(entity.endTime) - getTotalMinute(
+            entity.startTime
+        )
 
         val layoutSetting = LayoutParams(width, ((height * duration).toDouble() / 60).toInt())
-        layoutSetting.topMargin = (((height * getTotalMinute(entity.startTime)).toDouble() / 60) - (height * tableStartTime)).toInt()
+        layoutSetting.topMargin = (((height * getTotalMinute(
+            entity.startTime
+        )).toDouble() / 60) - (height * tableStartTime)).toInt()
         layoutSetting.leftMargin = width * entity.scheduleDay
 
         tableItem.layoutParams = layoutSetting
@@ -66,8 +77,10 @@ class ScheduleView(context: Context,
 
         val layoutText = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
-        val cornerRadius = dpToPx(context, RADIUS.toFloat())
-        val roundRadius = dpToPx(context, ROUND.toFloat())
+        val cornerRadius =
+            dpToPx(context, RADIUS.toFloat())
+        val roundRadius =
+            dpToPx(context, ROUND.toFloat())
 
         val border = GradientDrawable()
         border.setColor(Color.parseColor(entity.backgroundColor))
