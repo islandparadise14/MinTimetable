@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.widget.LinearLayout
 import com.islandparadise14.mintable.BaseTimeTable
 import com.islandparadise14.mintable.R
 import com.islandparadise14.mintable.model.ScheduleEntity
@@ -24,7 +25,7 @@ class ScheduleView(context: Context,
                    scheduleLongClickListener: OnScheduleLongClickListener?,
                    tableStartTime: Int,
                    radiusStyle: Int
-) : BaseTimeTable(context) {
+) : LinearLayout(context) {
     init {
         setting(
             context,
